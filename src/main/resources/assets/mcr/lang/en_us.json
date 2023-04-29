@@ -1,0 +1,46 @@
+{
+  "item.mcr.black_opal": "Black Opal",
+  "item.mcr.raw_black_opal": "Raw Black Opal",
+  "item.mcr.rubber": "Rubber",
+  "item.mcr.raw_rubber": "Raw Rubber",
+  "item.mcr.sticky_resin": "Sticky Resin",
+  "item.mcr.screwdriver": "Screwdriver",
+  "item.mcr.hammer": "Hammer",
+  "item.mcr.steel_ingot": "Steel Ingot",
+  "item.mcr.raw_steel": "Raw Steel",
+  "item.mcr.steel_rod": "Steel Rod",
+  "item.mcr.plastic": "Plastic",
+  "item.mcr.oil_bucket": "Oil Bucket",
+  "item.mcr.petroleum_bucket": "Petroleum Bucket",
+  "item.mcr.crude_oil_bucket": "Crude Oil Bucket",
+  "item.mcr.uranium_ingot": "Uranium Ingot",
+  "item.mcr.raw_uranium": "Raw Uranium",
+  "item.mcr.slag": "Slag",
+  "item.mcr.raw_lead": "Raw Lead",
+
+  "block.mcr.black_opal_block": "Block of Black Opal",
+  "block.mcr.black_opal_ore": "Black Opal Ore",
+  "block.mcr.deepslate_black_opal_ore": "Deepslate Black Opal Ore",
+  "block.mcr.endstone_black_opal_ore": "Endstone Black Opal Ore",
+  "block.mcr.netherrack_black_opal_ore": "Nether Black Opal Ore",
+  "block.mcr.uranium_ore": "Uranium Ore",
+  "block.mcr.machine_base": "Machine Base",
+  "block.mcr.infuser": "Infuser",
+  "block.mcr.lead_ore": "Lead Ore",
+
+  "block.mcr.ebony_log": "Ebony Log",
+  "block.mcr.ebony_planks": "Ebony Planks",
+  "block.mcr.ebony_wood": "Ebony Wood",
+  "block.mcr.stripped_ebony_log": "Stripped Ebony Log",
+  "block.mcr.stripped_ebony_wood": "Stripped Ebony Wood",
+  "block.mcr.ebony_leaves": "Ebony Leaves",
+  "block.mcr.ebony_sapling": "Ebony Sapling",
+
+  "fluid_type.mcr.petroleum_fluid": "Petroleum",
+
+  "creativemodetab.mcr_items": "McR - Items",
+  "creativemodetab.mcr_blocks": "McR - Blocks",
+  "creativemodetab.mcr_tools": "McR - Tools",
+
+  "gui.mcr.infuser": "Infuser"
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "mcr:block/stripped_ebony_log",
+    "side": "mcr:block/stripped_ebony_log"
+  }
+}

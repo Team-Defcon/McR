@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "mcr:raw_steel"
+  },
+  "result": "mcr:steel_ingot",
+  "experience": 0.5,
+  "cookingtime": 375
+}

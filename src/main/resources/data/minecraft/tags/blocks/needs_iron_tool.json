@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "mcr:black_opal_ore",
+    "mcr:deepslate_black_opal_ore",
+    "mcr:black_opal_block"
+  ]
+}

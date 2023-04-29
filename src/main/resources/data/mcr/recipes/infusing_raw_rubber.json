@@ -1,0 +1,12 @@
+{
+  "type": "mcr:infusing",
+  "ingredients": [
+    {
+      "item": "mcr:raw_rubber"
+    }
+  ],
+  "output": {
+    "item": "mcr:rubber",
+    "count": 1
+  }
+}

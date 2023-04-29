@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "mcr:sticky_resin"
+  },
+  "result": "mcr:plastic",
+  "experience": 0,
+  "cookingtime": 300
+}

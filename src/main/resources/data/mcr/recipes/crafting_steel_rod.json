@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  s",
+    " s ",
+    "s  "
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "mcr:steel_rod",
+    "count": 4
+  }
+}

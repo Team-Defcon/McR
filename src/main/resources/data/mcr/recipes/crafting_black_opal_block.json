@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "mcr:black_opal"
+    }
+  },
+  "result": {
+    "item": "mcr:black_opal_block",
+    "count": 1
+  }
+}

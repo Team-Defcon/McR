@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  s",
+    " s ",
+    "p  "
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_rod"
+    },
+    "p": {
+      "item": "mcr:plastic"
+    }
+  },
+  "result": {
+    "item": "mcr:screwdriver"
+  }
+}

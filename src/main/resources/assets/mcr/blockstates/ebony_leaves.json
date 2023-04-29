@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mcr:block/ebony_leaves"
+    }
+  }
+}

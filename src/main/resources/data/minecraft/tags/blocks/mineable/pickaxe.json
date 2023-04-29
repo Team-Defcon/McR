@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "mcr:black_opal_ore",
+    "mcr:black_opal_block",
+    "mcr:deepslate_black_opal_ore",
+    "mcr:netherrack_black_opal_ore",
+    "mcr:endstone_black_opal_ore",
+    "mcr:uranium_ore"
+  ]
+}

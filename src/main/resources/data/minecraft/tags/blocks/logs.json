@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "mcr:ebony_log",
+    "mcr:ebony_wood",
+    "mcr:stripped_ebony_log",
+    "mcr:stripped_ebony_wood"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "": {"model": "mcr:block/lead_ore",
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lsl",
+    " s ",
+    " p "
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_rod"
+    },
+    "l": {
+      "item": "mcr:steel_ingot"
+    },
+    "p": {
+      "item": "mcr:plastic"
+    }
+  },
+  "result": {
+    "item": "mcr:hammer"
+  }
+}

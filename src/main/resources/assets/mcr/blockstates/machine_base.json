@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": {"model": "mcr:block/machine_base"}
+  }
+}

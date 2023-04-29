@@ -1,0 +1,12 @@
+{
+  "parent": "mcr:block/machine",
+  "textures": {
+    "sides": "mcr:block/infuser/side",
+    "front": "mcr:block/infuser/front",
+    "west": "mcr:block/infuser/side",
+    "east": "mcr:block/infuser/side",
+    "south": "mcr:block/infuser/back",
+    "up": "mcr:block/infuser/top",
+    "down": "mcr:block/infuser/bottom"
+  }
+}
