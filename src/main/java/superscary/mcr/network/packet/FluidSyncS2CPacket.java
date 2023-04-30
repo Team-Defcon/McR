@@ -10,33 +10,41 @@ import superscary.mcr.screen.InfuserMenu;
 
 import java.util.function.Supplier;
 
-public class FluidSyncS2CPacket {
+public class FluidSyncS2CPacket
+{
     private final FluidStack fluidStack;
     private final BlockPos pos;
 
-    public FluidSyncS2CPacket(FluidStack fluidStack, BlockPos pos) {
+    public FluidSyncS2CPacket (FluidStack fluidStack, BlockPos pos)
+    {
         this.fluidStack = fluidStack;
         this.pos = pos;
     }
 
-    public FluidSyncS2CPacket(FriendlyByteBuf buf) {
+    public FluidSyncS2CPacket (FriendlyByteBuf buf)
+    {
         this.fluidStack = buf.readFluidStack();
         this.pos = buf.readBlockPos();
     }
 
-    public void toBytes(FriendlyByteBuf buf) {
+    public void toBytes (FriendlyByteBuf buf)
+    {
         buf.writeFluidStack(fluidStack);
         buf.writeBlockPos(pos);
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+    public boolean handle (Supplier<NetworkEvent.Context> supplier)
+    {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof InfuserBlockEntity blockEntity) {
+        context.enqueueWork(() ->
+        {
+            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof InfuserBlockEntity blockEntity)
+            {
                 blockEntity.setFluid(this.fluidStack);
 
-                if(Minecraft.getInstance().player.containerMenu instanceof InfuserMenu menu &&
-                        menu.getBlockEntity().getBlockPos().equals(pos)) {
+                if (Minecraft.getInstance().player.containerMenu instanceof InfuserMenu menu &&
+                        menu.getBlockEntity().getBlockPos().equals(pos))
+                {
                     menu.setFluid(this.fluidStack);
                 }
             }
