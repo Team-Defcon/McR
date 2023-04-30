@@ -1,6 +1,7 @@
 package superscary.mcr.integration.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -15,7 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
 import superscary.mcr.blocks.McRBlockReg;
+import superscary.mcr.blocks.entity.InfuserBlockEntity;
 import superscary.mcr.recipe.InfuserRecipe;
+
+import java.util.List;
 
 public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe>
 {
@@ -60,6 +64,9 @@ public class InfusingRecipeCategory implements IRecipeCategory<InfuserRecipe>
     public void setRecipe (@NotNull IRecipeLayoutBuilder builder, @NotNull InfuserRecipe recipe, @NotNull IFocusGroup focuses)
     {
         builder.addSlot(RecipeIngredientRole.INPUT, 86, 15).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 55, 15).addIngredients(ForgeTypes.FLUID_STACK, List.of(recipe.getFluid()))
+                                                                 .setFluidRenderer(InfuserBlockEntity.TANK_CAPACITY, true, 16, 61);
+
         builder.addSlot(RecipeIngredientRole.OUTPUT, 86, 60).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY));
     }
 }

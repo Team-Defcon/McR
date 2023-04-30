@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import superscary.mcr.McRMod;
+import superscary.mcr.toolkit.FluidJSONUtil;
 
 public class InfuserRecipe implements Recipe<SimpleContainer>
 {
@@ -22,12 +23,14 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    private final FluidStack fluidStack;
 
-    public InfuserRecipe (ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems)
+    public InfuserRecipe (ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, FluidStack fluidStack)
     {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.fluidStack = fluidStack;
     }
 
     @Override
@@ -39,6 +42,11 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
         }
 
         return recipeItems.get(0).test(pContainer.getItem(1));
+    }
+
+    public FluidStack getFluid ()
+    {
+        return fluidStack;
     }
 
     @Override
@@ -109,19 +117,21 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
+            FluidStack fluid = FluidJSONUtil.readFluid(pSerializedRecipe.get("fluid").getAsJsonObject());
 
             for (int i = 0; i < inputs.size(); i++)
             {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new InfuserRecipe(pRecipeId, output, inputs);
+            return new InfuserRecipe(pRecipeId, output, inputs, fluid);
         }
 
         @Override
         public @Nullable InfuserRecipe fromNetwork (ResourceLocation pRecipeId, FriendlyByteBuf pBuffer)
         {
             NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
+            FluidStack fluid = pBuffer.readFluidStack();
 
             for (int i = 0; i < inputs.size(); i++)
             {
@@ -129,7 +139,7 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
             }
 
             ItemStack output = pBuffer.readItem();
-            return new InfuserRecipe(pRecipeId, output, inputs);
+            return new InfuserRecipe(pRecipeId, output, inputs, fluid);
 
         }
 
@@ -137,6 +147,7 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
         public void toNetwork (FriendlyByteBuf pBuffer, InfuserRecipe pRecipe)
         {
             pBuffer.writeInt(pRecipe.getIngredients().size());
+            pBuffer.writeFluidStack(pRecipe.fluidStack);
 
             for (Ingredient ing : pRecipe.getIngredients())
             {

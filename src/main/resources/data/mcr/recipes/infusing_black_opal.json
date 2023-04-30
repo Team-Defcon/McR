@@ -1,0 +1,16 @@
+{
+  "type": "mcr:infusing",
+  "ingredients": [
+    {
+      "item": "mcr:raw_black_opal"
+    }
+  ],
+  "fluid": {
+    "FluidName": "minecraft:water",
+    "Amount": 500
+  },
+  "output": {
+    "item": "mcr:black_opal",
+    "count": 1
+  }
+}

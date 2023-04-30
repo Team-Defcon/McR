@@ -37,12 +37,6 @@ public class InfuserBlock extends EntityMachineBase
         super(properties);
     }
 
-    @Override
-    public @NotNull VoxelShape getShape (@NotNull BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context)
-    {
-        return SHAPE;
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement (BlockPlaceContext pContext)

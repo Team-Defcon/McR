@@ -42,5 +42,8 @@
   "creativemodetab.mcr_blocks": "McR - Blocks",
   "creativemodetab.mcr_tools": "McR - Tools",
 
-  "gui.mcr.infuser": "Infuser"
+  "gui.mcr.infuser": "Infuser",
+
+  "mcr.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "mcr.tooltip.liquid.amount": "%s mB"
 }

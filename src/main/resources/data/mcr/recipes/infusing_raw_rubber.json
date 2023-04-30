@@ -5,6 +5,10 @@
       "item": "mcr:raw_rubber"
     }
   ],
+  "fluid": {
+    "FluidName": "mcr:petroleum_fluid",
+    "Amount": 250
+  },
   "output": {
     "item": "mcr:rubber",
     "count": 1

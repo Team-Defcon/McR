@@ -110,11 +110,7 @@ public class McRMod
 
     private void commonSetup (final FMLCommonSetupEvent event)
     {
-
-        event.enqueueWork(() -> {
-            ModMessages.register();
-        });
-
+        event.enqueueWork(ModMessages::register);
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

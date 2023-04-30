@@ -7,9 +7,12 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
+import superscary.mcr.blocks.entity.InfuserBlockEntity;
 import superscary.mcr.screen.renderer.EnergyInfoArea;
+import superscary.mcr.screen.renderer.FluidTankRenderer;
 import superscary.mcr.toolkit.MouseUtil;
 
 import java.util.Optional;
@@ -19,6 +22,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(McRMod.MODID, "textures/gui/infuser_gui.png");
     private EnergyInfoArea energyInfoArea;
+    private FluidTankRenderer renderer;
 
     public InfuserScreen (InfuserMenu menu, Inventory inventory, Component component)
     {
@@ -30,6 +34,12 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
     {
         super.init();
         assignEnergyInfoArea();
+        assignFluidRenderer();
+    }
+
+    private void assignFluidRenderer ()
+    {
+        renderer = new FluidTankRenderer(InfuserBlockEntity.TANK_CAPACITY, true, 16, 61);
     }
 
     private void assignEnergyInfoArea ()
@@ -37,7 +47,6 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         energyInfoArea = new EnergyInfoArea(x + 156 ,y + 13, menu.blockEntity.getEnergyStorage());
-
     }
 
     @Override
@@ -46,6 +55,15 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+        renderFluidAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+    }
+
+    private void renderFluidAreaTooltips (PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y)
+    {
+        if (isMouseAboveArea(pMouseX, pMouseY, x, y, 55, 15))
+        {
+            renderTooltip(pPoseStack, renderer.getTooltip(menu.getFluidStack(), TooltipFlag.Default.NORMAL), Optional.empty(), pMouseX - x, pMouseY - y);
+        }
     }
 
     private void renderEnergyAreaTooltips (PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y)
@@ -71,6 +89,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
 
         renderProgressArrow(pPoseStack, x, y);
         energyInfoArea.draw(pPoseStack);
+        renderer.render(pPoseStack, x + 55, y + 15, menu.getFluidStack());
     }
 
     private void renderProgressArrow (PoseStack pPoseStack, int x, int y)
@@ -87,6 +106,11 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserMenu>
         renderBackground(pPoseStack);
         super.render(pPoseStack, mouseX, mouseY, delta);
         renderTooltip(pPoseStack, mouseX, mouseY);
+    }
+
+    private boolean isMouseAboveArea (int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY)
+    {
+        return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, renderer.getWidth(), renderer.getHeight());
     }
 
     private boolean isMouseAboveArea (int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height)
