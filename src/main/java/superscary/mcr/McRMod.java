@@ -26,6 +26,7 @@ import superscary.mcr.fluid.ModFluids;
 import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.recipe.ModRecipes;
+import superscary.mcr.screen.ElectricFurnaceScreen;
 import superscary.mcr.screen.InfuserScreen;
 import superscary.mcr.screen.ModMenuTypes;
 
@@ -75,13 +76,16 @@ public class McRMod
             event.accept(McRItemReg.RAW_LEAD);
             event.accept(McRItemReg.PLASTIC);
             event.accept(McRItemReg.SLAG);
+            event.accept(McRItemReg.TIN_INGOT);
+            event.accept(McRItemReg.WOODEN_GEAR);
+            event.accept(McRItemReg.STONE_GEAR);
+            event.accept(McRItemReg.IRON_GEAR);
+            event.accept(McRItemReg.TIN_GEAR);
+            event.accept(McRItemReg.STEEL_GEAR);
             event.accept(McRItemReg.OIL_BUCKET);
             event.accept(McRItemReg.PETROLEUM_BUCKET);
             event.accept(McRItemReg.CRUDE_OIL_BUCKET);
-        }
 
-        if (event.getTab() == McRCreativeModeTabs.MCR_BLOCKS)
-        {
             event.accept(McRBlockReg.BLACK_OPAL_BLOCK);
             event.accept(McRBlockReg.BLACK_OPAL_ORE);
             event.accept(McRBlockReg.DEEPSLATE_BLACK_OPAL_ORE);
@@ -98,10 +102,8 @@ public class McRMod
             event.accept(McRBlockReg.URANIUM_ORE);
             event.accept(McRBlockReg.LEAD_ORE);
             event.accept(McRBlockReg.INFUSER);
-        }
+            event.accept(McRBlockReg.ELECTRIC_FURNACE);
 
-        if (event.getTab() == McRCreativeModeTabs.MCR_TOOLS)
-        {
             event.accept(McRItemReg.SCREWDRIVER);
             event.accept(McRItemReg.HAMMER);
         }
@@ -127,6 +129,7 @@ public class McRMod
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_PETROLEUM.get(), RenderType.translucent());
 
             MenuScreens.register(ModMenuTypes.INFUSER_MENU.get(), InfuserScreen::new);
+            MenuScreens.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
 
         }
     }

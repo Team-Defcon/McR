@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sgs",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:tin_ingot"
+    },
+    "g": {
+      "item": "mcr:iron_gear"
+    }
+  },
+  "result": {
+    "item": "mcr:tin_gear"
+  }
+}

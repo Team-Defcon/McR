@@ -16,6 +16,7 @@ public class ModMenuTypes
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, McRMod.MODID);
 
     public static final RegistryObject<MenuType<InfuserMenu>> INFUSER_MENU = registerMenuType(InfuserMenu::new, "infuser_menu");
+    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU = registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType (IContainerFactory<T> factory, String name)
     {

@@ -4,7 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+import superscary.mcr.blocks.entity.ElectricFurnaceBlockEntity;
 import superscary.mcr.blocks.entity.InfuserBlockEntity;
+import superscary.mcr.screen.ElectricFurnaceMenu;
 import superscary.mcr.screen.InfuserMenu;
 
 import java.util.function.Supplier;
@@ -47,6 +49,18 @@ public class EnergySyncS2CPacket
                }
 
            }
+
+            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ElectricFurnaceBlockEntity blockEntity)
+            {
+                blockEntity.setEnergyLevel(energy);
+
+                if (Minecraft.getInstance().player.containerMenu instanceof ElectricFurnaceMenu menu && menu.blockEntity.getBlockEntity().getBlockPos().equals(pos))
+                {
+                    blockEntity.setEnergyLevel(energy);
+                }
+
+            }
+
         });
 
         return true;

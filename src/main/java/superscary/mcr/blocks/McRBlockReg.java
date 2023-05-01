@@ -15,6 +15,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import superscary.mcr.McRMod;
+import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
 import superscary.mcr.blocks.machine.InfuserBlock;
 import superscary.mcr.blocks.machine.MachineBase;
 import superscary.mcr.blocks.trees.ModFlammableRotatedPillarBlock;
@@ -69,6 +70,9 @@ public class McRBlockReg
     public static final RegistryObject<Block> INFUSER = registerBlock("infuser",
             () -> new InfuserBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10F).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace",
+            () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(10f).requiresCorrectToolForDrops()));
 
     /***
      *

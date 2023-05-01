@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "gbg",
+    "sfs"
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_ingot"
+    },
+    "g": {
+      "item": "mcr:iron_gear"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "b": {
+      "item": "mcr:machine_base"
+    }
+  },
+  "result": {
+    "item": "mcr:electric_furnace"
+  }
+}

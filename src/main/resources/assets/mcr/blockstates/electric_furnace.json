@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mcr:block/electric_furnace"
+    },
+    "facing=south": {
+      "model": "mcr:block/electric_furnace",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mcr:block/electric_furnace",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mcr:block/electric_furnace",
+      "y": 270
+    }
+  }
+}

@@ -15,21 +15,13 @@ public class McRCreativeModeTabs
 {
 
     public static CreativeModeTab MCR_ITEMS;
-    public static CreativeModeTab MCR_BLOCKS;
-    public static CreativeModeTab MCR_TOOLS;
 
     @SubscribeEvent
     public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event)
     {
-        MCR_ITEMS = event.registerCreativeModeTab(new ResourceLocation(McRMod.MODID, "mcr_items"),
-                builder -> builder.icon(() -> new ItemStack(McRItemReg.RUBBER.get()))
-                        .title(Component.translatable("creativemodetab.mcr_items")));
-        MCR_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(McRMod.MODID, "mcr_blocks"),
-                builder -> builder.icon(() -> new ItemStack(McRBlockReg.BLACK_OPAL_BLOCK.get()))
-                        .title(Component.translatable("creativemodetab.mcr_blocks")));
-        MCR_TOOLS = event.registerCreativeModeTab(new ResourceLocation(McRMod.MODID, "mcr_tools"),
-                builder -> builder.icon(() -> new ItemStack(McRItemReg.SCREWDRIVER.get()))
-                        .title(Component.translatable("creativemodetab.mcr_tools")));
+        MCR_ITEMS = event.registerCreativeModeTab(new ResourceLocation(McRMod.MODID, "mcr"),
+                builder -> builder.icon(() -> new ItemStack(McRBlockReg.INFUSER.get()))
+                        .title(Component.translatable("creativemodetab.mcr")));
     }
 
 }

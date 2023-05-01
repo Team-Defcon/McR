@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "sgs",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:iron_ingot"
+    },
+    "g": {
+      "item": "mcr:stone_gear"
+    }
+  },
+  "result": {
+    "item": "mcr:iron_gear"
+  }
+}

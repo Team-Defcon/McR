@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,29 +22,21 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import superscary.mcr.blocks.machine.InfuserBlock;
+import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.network.packet.FluidSyncS2CPacket;
-import superscary.mcr.recipe.InfuserRecipe;
-import superscary.mcr.screen.InfuserMenu;
+import superscary.mcr.screen.ElectricFurnaceMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class InfuserBlockEntity extends BlockEntity implements MenuProvider
+public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvider
 {
-
-    public static final int TANK_CAPACITY = 64000;
-
     private final ItemStackHandler itemHandler = new ItemStackHandler(3)
     {
         @Override
@@ -56,9 +50,8 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
         {
             return switch (slot)
             {
-                case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
-                case 1 -> true;
-                case 2 -> false;
+                case 0 -> true;
+                case 1, 2 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
@@ -76,44 +69,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
 
     private static final int ENERGY_REQ = 32;
 
-    private final FluidTank FLUID_TANK = new FluidTank(TANK_CAPACITY)
-    {
-        @Override
-        protected void onContentsChanged ()
-        {
-            setChanged();
-            if (!level.isClientSide())
-            {
-                ModMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
-            }
-        }
-
-        @Override
-        public boolean isFluidValid (FluidStack stack)
-        {
-            if (FLUID_TANK.getFluidAmount() == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return FLUID_TANK.getFluid().getFluid().equals(stack.getFluid());
-            }
-        }
-    };
-
-    public void setFluid (FluidStack stack)
-    {
-        this.FLUID_TANK.setFluid(stack);
-    }
-
-    public FluidStack getFluidStack()
-    {
-        return this.FLUID_TANK.getFluid();
-    }
-
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-    private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
     private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
             Map.of(Direction.DOWN,      LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
                     Direction.NORTH,    LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 1, (index, stack) -> itemHandler.isItemValid(1, stack))),
@@ -127,9 +83,9 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     private int progress = 0;
     private int maxProgress = 78;
 
-    public InfuserBlockEntity (BlockPos pos, BlockState state)
+    public ElectricFurnaceBlockEntity (BlockPos pos, BlockState state)
     {
-        super(ModBlockEntities.INFUSER.get(), pos, state);
+        super(ModBlockEntities.ELECTRIC_FURNACE.get(), pos, state);
         this.data = new ContainerData()
         {
             @Override
@@ -137,8 +93,8 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             {
                 return switch (index)
                 {
-                    case 0 -> InfuserBlockEntity.this.progress;
-                    case 1 -> InfuserBlockEntity.this.maxProgress;
+                    case 0 -> ElectricFurnaceBlockEntity.this.progress;
+                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -149,8 +105,8 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
 
                 switch (index)
                 {
-                    case 0 -> InfuserBlockEntity.this.progress = value;
-                    case 1 -> InfuserBlockEntity.this.maxProgress = value;
+                    case 0 -> ElectricFurnaceBlockEntity.this.progress = value;
+                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress = value;
                 }
 
             }
@@ -158,7 +114,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             @Override
             public int getCount ()
             {
-                return 2;
+                return 3;
             }
         };
     }
@@ -166,7 +122,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     @Override
     public @NotNull Component getDisplayName ()
     {
-        return Component.translatable("gui.mcr.infuser");
+        return Component.translatable("gui.mcr.electric_furnace");
     }
 
     @Nullable
@@ -174,8 +130,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     public AbstractContainerMenu createMenu (int id, @NotNull Inventory inventory, @NotNull Player player)
     {
         ModMessages.sendToClients(new EnergySyncS2CPacket(this.ENERGY_STORAGE.getEnergyStored(), getBlockPos()));
-        ModMessages.sendToClients(new FluidSyncS2CPacket(getFluidStack(), getBlockPos()));
-        return new InfuserMenu(id, inventory, this, this.data);
+        return new ElectricFurnaceMenu(id, inventory, this, this.data);
     }
 
     public IEnergyStorage getEnergyStorage ()
@@ -206,7 +161,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
 
             if (directionWrappedHandlerMap.containsKey(side))
             {
-                Direction localDir = this.getBlockState().getValue(InfuserBlock.FACING);
+                Direction localDir = this.getBlockState().getValue(ElectricFurnaceBlock.FACING);
 
                 if (side == Direction.UP || side == Direction.DOWN)
                 {
@@ -225,11 +180,6 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
 
         }
 
-        if (cap == ForgeCapabilities.FLUID_HANDLER)
-        {
-            return lazyFluidHandler.cast();
-        }
-
         return super.getCapability(cap, side);
     }
 
@@ -239,7 +189,6 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
         lazyEnergyHandler = LazyOptional.of(() -> ENERGY_STORAGE);
-        lazyFluidHandler = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
@@ -248,16 +197,14 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyEnergyHandler.invalidate();
-        lazyFluidHandler.invalidate();
     }
 
     @Override
     protected void saveAdditional (CompoundTag nbt)
     {
         nbt.put("inventory", itemHandler.serializeNBT());
-        nbt.putInt("infuser.progress", this.progress);
-        nbt.putInt("infuser.energy", ENERGY_STORAGE.getEnergyStored());
-        nbt = FLUID_TANK.writeToNBT(nbt);
+        nbt.putInt("efurnace.progress", this.progress);
+        nbt.putInt("efurnace.energy", ENERGY_STORAGE.getEnergyStored());
 
         super.saveAdditional(nbt);
     }
@@ -267,9 +214,8 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-        progress = nbt.getInt("infuser.progress");
-        ENERGY_STORAGE.setEnergy(nbt.getInt("infuser.energy"));
-        FLUID_TANK.readFromNBT(nbt);
+        progress = nbt.getInt("efurnace.progress");
+        ENERGY_STORAGE.setEnergy(nbt.getInt("efurnace.energy"));
     }
 
     public void drops ()
@@ -285,7 +231,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
 
     }
 
-    public static void tick (Level level, BlockPos pos, BlockState state, InfuserBlockEntity pEntity)
+    public static void tick (Level level, BlockPos pos, BlockState state, ElectricFurnaceBlockEntity pEntity)
     {
         if (level.isClientSide)
         {
@@ -309,47 +255,15 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             setChanged(level, pos, state);
         }
 
-        if (hasFluidItemInSourceSlot(pEntity))
-        {
-            transferItemFluidToFluidTank(pEntity);
-        }
 
     }
 
-    private static void transferItemFluidToFluidTank (InfuserBlockEntity pEntity)
-    {
-        pEntity.itemHandler.getStackInSlot(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
-            int drainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1000);
-
-            FluidStack stack = handler.drain(drainAmount, IFluidHandler.FluidAction.SIMULATE);
-            if (pEntity.FLUID_TANK.isFluidValid(stack))
-            {
-                stack = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
-                fillTankWithFluid(pEntity, stack, handler.getContainer());
-            }
-
-        });
-
-    }
-
-    private static void fillTankWithFluid (InfuserBlockEntity pEntity, FluidStack stack, ItemStack container)
-    {
-        pEntity.FLUID_TANK.fill(stack, IFluidHandler.FluidAction.EXECUTE);
-        pEntity.itemHandler.extractItem(0, 1, false);
-        pEntity.itemHandler.insertItem(0, container, false);
-    }
-
-    private static boolean hasFluidItemInSourceSlot (InfuserBlockEntity pEntity)
-    {
-        return pEntity.itemHandler.getStackInSlot(0).getCount() > 0;
-    }
-
-    private static void extractEnergy (InfuserBlockEntity pEntity)
+    private static void extractEnergy (ElectricFurnaceBlockEntity pEntity)
     {
         pEntity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
     }
 
-    private static boolean hasEnoughEnergy (InfuserBlockEntity pEntity)
+    private static boolean hasEnoughEnergy (ElectricFurnaceBlockEntity pEntity)
     {
         return pEntity.ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * pEntity.maxProgress;
     }
@@ -359,7 +273,7 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
         this.progress = 0;
     }
 
-    private static void craftItem (InfuserBlockEntity pEntity)
+    private static void craftItem (ElectricFurnaceBlockEntity pEntity)
     {
         Level level = pEntity.level;
 
@@ -369,20 +283,19 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(InfuserRecipe.Type.INSTANCE, inventory, level);
+        Optional<SmeltingRecipe> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, inventory, level);
 
         if (hasRecipe(pEntity))
         {
-            pEntity.FLUID_TANK.drain(recipe.get().getFluid().getAmount(), IFluidHandler.FluidAction.EXECUTE);
-            pEntity.itemHandler.extractItem(1, 1, false);
-            pEntity.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(2).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
+            pEntity.itemHandler.extractItem(0, 1, false);
+            pEntity.itemHandler.setStackInSlot(1, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(1).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
 
             pEntity.resetProgress();
         }
 
     }
 
-    private static boolean hasRecipe (InfuserBlockEntity entity)
+    private static boolean hasRecipe (ElectricFurnaceBlockEntity entity)
     {
         Level level = entity.level;
 
@@ -392,33 +305,22 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(InfuserRecipe.Type.INSTANCE, inventory, level);
+        Optional<SmeltingRecipe> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, inventory, level);
 
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY)) && hasCorrectFluidInTank(entity, recipe) && hasCorrectFluidAmountInTank(entity, recipe);
-
-    }
-
-    private static boolean hasCorrectFluidAmountInTank (InfuserBlockEntity entity, Optional<InfuserRecipe> recipe)
-    {
-        return entity.FLUID_TANK.getFluidAmount() >= recipe.get().getFluid().getAmount();
-    }
-
-    private static boolean hasCorrectFluidInTank (InfuserBlockEntity entity, Optional<InfuserRecipe> recipe)
-    {
-        return recipe.get().getFluid().equals(entity.FLUID_TANK.getFluid());
+        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY));
     }
 
     private static boolean canInsertItemIntoOutputSlot (SimpleContainer inventory, ItemStack stack)
     {
-        return inventory.getItem(2).getItem() == stack.getItem() || inventory.getItem(2).isEmpty();
+        return inventory.getItem(1).getItem() == stack.getItem() || inventory.getItem(1).isEmpty();
     }
 
     private static boolean canInsertAmountIntoOutputSlot (SimpleContainer inventory)
     {
-        return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
+        return inventory.getItem(1).getMaxStackSize() > inventory.getItem(1).getCount();
     }
 
-    public InfuserBlockEntity getBlockEntity ()
+    public ElectricFurnaceBlockEntity getBlockEntity ()
     {
         return this;
     }
