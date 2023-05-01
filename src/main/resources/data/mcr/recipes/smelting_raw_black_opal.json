@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "mcr:raw_black_opal"
-  },
-  "result": "mcr:black_opal",
-  "experience": 0.5,
-  "cookingtime": 200
-}

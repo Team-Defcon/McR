@@ -26,7 +26,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import superscary.mcr.blocks.McRBlockReg;
 import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
+import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.screen.ElectricFurnaceMenu;
@@ -34,6 +36,7 @@ import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvider
 {
@@ -289,6 +292,20 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         {
             pEntity.itemHandler.extractItem(0, 1, false);
             pEntity.itemHandler.setStackInSlot(1, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(1).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
+
+            Random random = new Random();
+            int slagRandom = random.nextInt(1, 11);
+
+            if (pEntity.itemHandler.getStackInSlot(2).getItem().equals(McRItemReg.SLAG.get()) || pEntity.itemHandler.getStackInSlot(2).getItem().equals(ItemStack.EMPTY.getItem()))
+            {
+                int putAmount = slagRandom;
+                System.out.println(putAmount);
+                if (pEntity.itemHandler.getStackInSlot(2).getCount() + 1 <= 64 && putAmount == 1)
+                {
+                    int currentInSlot = pEntity.itemHandler.getStackInSlot(2).getCount();
+                    pEntity.itemHandler.setStackInSlot(2, new ItemStack(McRItemReg.SLAG.get(), 1 + currentInSlot));
+                }
+            }
 
             pEntity.resetProgress();
         }
