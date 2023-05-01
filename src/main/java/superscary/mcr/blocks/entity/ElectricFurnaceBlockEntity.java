@@ -299,7 +299,6 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             if (pEntity.itemHandler.getStackInSlot(2).getItem().equals(McRItemReg.SLAG.get()) || pEntity.itemHandler.getStackInSlot(2).getItem().equals(ItemStack.EMPTY.getItem()))
             {
                 int putAmount = slagRandom;
-                System.out.println(putAmount);
                 if (pEntity.itemHandler.getStackInSlot(2).getCount() + 1 <= 64 && putAmount == 1)
                 {
                     int currentInSlot = pEntity.itemHandler.getStackInSlot(2).getCount();
