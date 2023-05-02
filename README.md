@@ -1,5 +1,5 @@
 # McR
-[![Downloads](http://cf.way2muchnoise.eu/full_mcr_downloads.svg)  ![Available](http://cf.way2muchnoise.eu/versions/heavy-inventories.svg)](https://minecraft.curseforge.com/projects/mcr)
+[![Downloads](http://cf.way2muchnoise.eu/full_mcr_downloads.svg)  ![Available](http://cf.way2muchnoise.eu/versions/mcr.svg)](https://minecraft.curseforge.com/projects/mcr)
 
 ## Support
 
