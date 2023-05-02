@@ -1,4 +1,4 @@
-package superscary.mcr.screen;
+package superscary.mcr.gui;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -8,38 +8,41 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.blocks.McRBlockReg;
-import superscary.mcr.blocks.entity.ElectricFurnaceBlockEntity;
+import superscary.mcr.blocks.entity.InfuserBlockEntity;
 
-public class ElectricFurnaceMenu extends AbstractContainerMenu
+public class InfuserMenu extends AbstractContainerMenu
 {
 
-    public final ElectricFurnaceBlockEntity blockEntity;
+    public final InfuserBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private FluidStack fluidStack;
 
-    public ElectricFurnaceMenu (int id, Inventory inv, FriendlyByteBuf extraData)
+    public InfuserMenu (int id, Inventory inv, FriendlyByteBuf extraData)
     {
-        this (id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this (id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public ElectricFurnaceMenu (int id, Inventory inv, BlockEntity entity, ContainerData data)
+    public InfuserMenu (int id, Inventory inv, BlockEntity entity, ContainerData data)
     {
-        super(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), id);
+        super(ModMenuTypes.INFUSER_MENU.get(), id);
         checkContainerSize(inv, 3);
-        blockEntity = (ElectricFurnaceBlockEntity) entity;
+        blockEntity = (InfuserBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
+        this.fluidStack = blockEntity.getFluidStack();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 56, 35));
-            this.addSlot(new SlotItemHandler(handler, 1, 116, 35));
-            this.addSlot(new SlotItemHandler(handler, 2, 116, 61));
+            this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
+            this.addSlot(new SlotItemHandler(handler, 1, 86, 15));
+            this.addSlot(new SlotItemHandler(handler, 2, 86, 60));
         });
 
         addDataSlots(data);
@@ -51,18 +54,28 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu
         return data.get(0) > 0;
     }
 
+    public void setFluid (FluidStack fluidStack)
+    {
+        this.fluidStack = fluidStack;
+    }
+
+    public FluidStack getFluidStack ()
+    {
+        return this.fluidStack;
+    }
+
     public int getScaledProgress()
     {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress
-        int progressArrowSize = 24; // This is the height in pixels of your arrow
+        int progressArrowSize = 26; // This is the height in pixels of your arrow
 
-        return maxProgress != 0 && progress != 0 ? (progress * progressArrowSize) / maxProgress : 0;
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
     // must assign a slot number to each of the slots used by the GUI.
-    // For this container, we can see both the tile inventory's slots and the player inventory slots and the hotbar.
+    // For this container, we can see both the tile inventory's slots as well as the player inventory slots and the hotbar.
     // Each time we add a Slot to the container, it automatically increases the slotIndex, which means
     //  0 - 8 = hotbar slots (which will map to the InventoryPlayer slot numbers 0 - 8)
     //  9 - 35 = player inventory slots (which map to the InventoryPlayer slot numbers 9 - 35)
@@ -124,7 +137,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu
     @Override
     public boolean stillValid (@NotNull Player player)
     {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, McRBlockReg.ELECTRIC_FURNACE.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, McRBlockReg.INFUSER.get());
     }
 
     private void addPlayerInventory (Inventory playerInventory)
@@ -133,7 +146,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu
         {
             for (int l = 0; l < 9; ++l)
             {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
             }
         }
     }
@@ -142,12 +155,12 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu
     {
         for (int i = 0; i < 9; ++i)
         {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
         }
     }
 
 
-    public ElectricFurnaceBlockEntity getBlockEntity ()
+    public InfuserBlockEntity getBlockEntity ()
     {
         return this.blockEntity;
     }

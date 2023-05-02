@@ -15,6 +15,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import superscary.mcr.McRMod;
+import superscary.mcr.blocks.machine.CoalGeneratorBlock;
 import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
 import superscary.mcr.blocks.machine.InfuserBlock;
 import superscary.mcr.blocks.machine.MachineBase;
@@ -72,6 +73,9 @@ public class McRBlockReg
                     .strength(10F).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace",
             () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(10f).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> COAL_GENERATOR = registerBlock("coal_generator",
+            () -> new CoalGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
 
     /***

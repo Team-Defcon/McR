@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,9 +25,10 @@ import superscary.mcr.fluid.ModFluids;
 import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.recipe.ModRecipes;
-import superscary.mcr.screen.ElectricFurnaceScreen;
-import superscary.mcr.screen.InfuserScreen;
-import superscary.mcr.screen.ModMenuTypes;
+import superscary.mcr.gui.CoalGeneratorScreen;
+import superscary.mcr.gui.ElectricFurnaceScreen;
+import superscary.mcr.gui.InfuserScreen;
+import superscary.mcr.gui.ModMenuTypes;
 
 @Mod(McRMod.MODID)
 public class McRMod
@@ -103,6 +103,7 @@ public class McRMod
             event.accept(McRBlockReg.LEAD_ORE);
             event.accept(McRBlockReg.INFUSER);
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
+            event.accept(McRBlockReg.COAL_GENERATOR);
 
             event.accept(McRItemReg.SCREWDRIVER);
             event.accept(McRItemReg.HAMMER);
@@ -130,6 +131,7 @@ public class McRMod
 
             MenuScreens.register(ModMenuTypes.INFUSER_MENU.get(), InfuserScreen::new);
             MenuScreens.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
+            MenuScreens.register(ModMenuTypes.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
 
         }
     }

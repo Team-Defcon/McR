@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " f ",
+    "gbg",
+    "fsf"
+  ],
+  "key": {
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "b": {
+      "item": "mcr:machine_base"
+    },
+    "g": {
+      "item": "mcr:iron_gear"
+    },
+    "s": [
+      {
+        "item": "minecraft:smooth_stone_slab"
+      },
+      {
+        "item": "minecraft:smooth_stone_slab"
+      },
+      {
+        "item": "minecraft:cobblestone_slab"
+      },
+      {
+        "item": "minecraft:blackstone_slab"
+      }
+    ]
+  },
+  "result": {
+    "item": "mcr:coal_generator"
+  }
+}

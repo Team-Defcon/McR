@@ -1,0 +1,9 @@
+{
+  "homepage": "https://curseforge.com/minecraft/mc-mods/mcr",
+  "1.19.4": {
+    "0.0.1": "Pre alpha. Expect most things to change."
+  },
+  "promos": {
+    "1.19.4-recommended": "0.0.1"
+  }
+}

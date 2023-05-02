@@ -1,4 +1,4 @@
-package superscary.mcr.screen;
+package superscary.mcr.gui;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -17,6 +17,8 @@ public class ModMenuTypes
 
     public static final RegistryObject<MenuType<InfuserMenu>> INFUSER_MENU = registerMenuType(InfuserMenu::new, "infuser_menu");
     public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU = registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
+    public static final RegistryObject<MenuType<CoalGeneratorMenu>> COAL_GENERATOR_MENU = registerMenuType(CoalGeneratorMenu::new, "coal_generator_menu");
+
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType (IContainerFactory<T> factory, String name)
     {

@@ -1,4 +1,4 @@
-package superscary.mcr.screen.renderer;
+package superscary.mcr.gui.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.Rect2i;

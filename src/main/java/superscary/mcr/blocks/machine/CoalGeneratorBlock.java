@@ -14,24 +14,22 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import superscary.mcr.blocks.entity.ElectricFurnaceBlockEntity;
+import superscary.mcr.blocks.entity.CoalGeneratorEntity;
 import superscary.mcr.blocks.entity.ModBlockEntities;
 
-public class ElectricFurnaceBlock extends EntityMachineBase
+public class CoalGeneratorBlock extends EntityMachineBase
 {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public ElectricFurnaceBlock (BlockBehaviour.Properties properties)
+    public CoalGeneratorBlock (Properties properties)
     {
         super(properties);
     }
@@ -71,14 +69,14 @@ public class ElectricFurnaceBlock extends EntityMachineBase
     }
 
     @Override
-    public void onRemove (BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, BlockState pNewState, boolean pIsMoving)
+    public void onRemove (BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving)
     {
         if (pState.getBlock() != pNewState.getBlock())
         {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ElectricFurnaceBlockEntity)
+            if (blockEntity instanceof CoalGeneratorEntity)
             {
-                ((ElectricFurnaceBlockEntity) blockEntity).drops();
+                ((CoalGeneratorEntity) blockEntity).drops();
             }
         }
 
@@ -86,14 +84,14 @@ public class ElectricFurnaceBlock extends EntityMachineBase
     }
 
     @Override
-    public @NotNull InteractionResult use (@NotNull BlockState pState, Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit)
+    public InteractionResult use (BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit)
     {
         if (!pLevel.isClientSide)
         {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof ElectricFurnaceBlockEntity)
+            if (entity instanceof CoalGeneratorEntity)
             {
-                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (ElectricFurnaceBlockEntity) entity, pPos);
+                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (CoalGeneratorEntity) entity, pPos);
             }
             else
             {
@@ -106,16 +104,16 @@ public class ElectricFurnaceBlock extends EntityMachineBase
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity (@NotNull BlockPos pos, @NotNull BlockState state)
+    public BlockEntity newBlockEntity (BlockPos pos, BlockState state)
     {
-        return new ElectricFurnaceBlockEntity(pos, state);
+        return new CoalGeneratorEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker (Level level, BlockState state, BlockEntityType<T> type)
     {
-        return createTickerHelper(type, ModBlockEntities.ELECTRIC_FURNACE.get(), ElectricFurnaceBlockEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.COAL_GENERATOR.get(), CoalGeneratorEntity::tick);
     }
 
 }

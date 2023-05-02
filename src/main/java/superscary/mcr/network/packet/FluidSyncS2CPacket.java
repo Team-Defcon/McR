@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.network.NetworkEvent;
 import superscary.mcr.blocks.entity.InfuserBlockEntity;
-import superscary.mcr.screen.InfuserMenu;
+import superscary.mcr.gui.InfuserMenu;
 
 import java.util.function.Supplier;
 

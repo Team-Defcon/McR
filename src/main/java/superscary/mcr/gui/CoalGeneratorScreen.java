@@ -1,4 +1,4 @@
-package superscary.mcr.screen;
+package superscary.mcr.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,18 +9,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
-import superscary.mcr.screen.renderer.EnergyInfoArea;
+import superscary.mcr.gui.renderer.EnergyInfoArea;
 import superscary.mcr.toolkit.MouseUtil;
 
 import java.util.Optional;
 
-public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurnaceMenu>
+public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMenu>
 {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(McRMod.MODID, "textures/gui/electric_furnace_gui.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(McRMod.MODID, "textures/gui/coal_generator_gui.png");
     private EnergyInfoArea energyInfoArea;
 
-    public ElectricFurnaceScreen (ElectricFurnaceMenu menu, Inventory inventory, Component component)
+    public CoalGeneratorScreen (CoalGeneratorMenu menu, Inventory inventory, Component component)
     {
         super(menu, inventory, component);
     }

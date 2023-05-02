@@ -2,7 +2,6 @@ package superscary.mcr.blocks.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -13,8 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,20 +24,17 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
-import superscary.mcr.items.McRItemReg;
+import superscary.mcr.blocks.machine.CoalGeneratorBlock;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.gui.ElectricFurnaceMenu;
+import superscary.mcr.gui.CoalGeneratorMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
 
-public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvider
+public class CoalGeneratorEntity extends BlockEntity implements MenuProvider
 {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3)
+    private final ItemStackHandler itemHandler = new ItemStackHandler(5)
     {
         @Override
         protected void onContentsChanged (int slot)
@@ -53,13 +48,13 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             return switch (slot)
             {
                 case 0 -> true;
-                case 1, 2 -> false;
+                case 1, 2, 3, 4 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
 
-    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(60000, 256)
+    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(100000, 256)
     {
         @Override
         public void onEnergyChanged ()
@@ -67,9 +62,19 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             setChanged();
             ModMessages.sendToClients(new EnergySyncS2CPacket(this.energy, getBlockPos()));
         }
-    };
 
-    private static final int ENERGY_REQ = 32;
+        @Override
+        public boolean canReceive ()
+        {
+            return false;
+        }
+
+        @Override
+        public boolean canExtract ()
+        {
+            return true;
+        }
+    };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
@@ -85,9 +90,9 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     private int progress = 0;
     private int maxProgress = 78;
 
-    public ElectricFurnaceBlockEntity (BlockPos pos, BlockState state)
+    public CoalGeneratorEntity (BlockPos pos, BlockState state)
     {
-        super(ModBlockEntities.ELECTRIC_FURNACE.get(), pos, state);
+        super(ModBlockEntities.COAL_GENERATOR.get(), pos, state);
         this.data = new ContainerData()
         {
             @Override
@@ -95,8 +100,8 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             {
                 return switch (index)
                 {
-                    case 0 -> ElectricFurnaceBlockEntity.this.progress;
-                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress;
+                    case 0 -> CoalGeneratorEntity.this.progress;
+                    case 1 -> CoalGeneratorEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -107,8 +112,8 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
 
                 switch (index)
                 {
-                    case 0 -> ElectricFurnaceBlockEntity.this.progress = value;
-                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress = value;
+                    case 0 -> CoalGeneratorEntity.this.progress = value;
+                    case 1 -> CoalGeneratorEntity.this.maxProgress = value;
                 }
 
             }
@@ -116,7 +121,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             @Override
             public int getCount ()
             {
-                return 3;
+                return 1;
             }
         };
     }
@@ -124,7 +129,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     @Override
     public @NotNull Component getDisplayName ()
     {
-        return Component.translatable("gui.mcr.electric_furnace");
+        return Component.translatable("gui.mcr.coal_generator");
     }
 
     @Nullable
@@ -132,7 +137,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     public AbstractContainerMenu createMenu (int id, @NotNull Inventory inventory, @NotNull Player player)
     {
         ModMessages.sendToClients(new EnergySyncS2CPacket(this.ENERGY_STORAGE.getEnergyStored(), getBlockPos()));
-        return new ElectricFurnaceMenu(id, inventory, this, this.data);
+        return new CoalGeneratorMenu(id, inventory, this, this.data);
     }
 
     public IEnergyStorage getEnergyStorage ()
@@ -163,7 +168,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
 
             if (directionWrappedHandlerMap.containsKey(side))
             {
-                Direction localDir = this.getBlockState().getValue(ElectricFurnaceBlock.FACING);
+                Direction localDir = this.getBlockState().getValue(CoalGeneratorBlock.FACING);
 
                 if (side == Direction.UP || side == Direction.DOWN)
                 {
@@ -205,8 +210,8 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     protected void saveAdditional (CompoundTag nbt)
     {
         nbt.put("inventory", itemHandler.serializeNBT());
-        nbt.putInt("efurnace.progress", this.progress);
-        nbt.putInt("efurnace.energy", ENERGY_STORAGE.getEnergyStored());
+        nbt.putInt("coal_generator.progress", this.progress);
+        nbt.putInt("coal_generator.energy", ENERGY_STORAGE.getEnergyStored());
 
         super.saveAdditional(nbt);
     }
@@ -216,8 +221,8 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-        progress = nbt.getInt("efurnace.progress");
-        ENERGY_STORAGE.setEnergy(nbt.getInt("efurnace.energy"));
+        progress = nbt.getInt("coal_generator.progress");
+        ENERGY_STORAGE.setEnergy(nbt.getInt("coal_generator.energy"));
     }
 
     public void drops ()
@@ -233,41 +238,35 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
 
     }
 
-    public static void tick (Level level, BlockPos pos, BlockState state, ElectricFurnaceBlockEntity pEntity)
+    public static void tick (Level level, BlockPos pos, BlockState state, CoalGeneratorEntity pEntity)
     {
+
         if (level.isClientSide)
         {
             return;
         }
 
-        if (hasRecipe(pEntity) && hasEnoughEnergy(pEntity))
+        //burn fuel item to generate FE
+        if (isFuel(pEntity))
         {
-            pEntity.progress++;
-            extractEnergy(pEntity);
-            setChanged(level, pos, state);
-
-            if (pEntity.progress >= pEntity.maxProgress)
+            if (pEntity.ENERGY_STORAGE.getEnergyStored() + 12000 < pEntity.ENERGY_STORAGE.getMaxEnergyStored())
             {
-                craftItem(pEntity);
+                pEntity.itemHandler.extractItem(0, 1, false);
+                pEntity.ENERGY_STORAGE.setEnergy(pEntity.ENERGY_STORAGE.getEnergyStored() + 12000);
+                ModMessages.sendToClients(new EnergySyncS2CPacket(pEntity.ENERGY_STORAGE.getEnergyStored(), pos));
             }
         }
         else
         {
             pEntity.resetProgress();
-            setChanged(level, pos, state);
         }
 
 
     }
 
-    private static void extractEnergy (ElectricFurnaceBlockEntity pEntity)
+    private static boolean isFuel(CoalGeneratorEntity pEntity)
     {
-        pEntity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
-    }
-
-    private static boolean hasEnoughEnergy (ElectricFurnaceBlockEntity pEntity)
-    {
-        return pEntity.ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * pEntity.maxProgress;
+        return pEntity.itemHandler.getStackInSlot(0).getItem().equals(Items.COAL.asItem());
     }
 
     private void resetProgress ()
@@ -275,73 +274,9 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         this.progress = 0;
     }
 
-    private static void craftItem (ElectricFurnaceBlockEntity pEntity)
-    {
-        Level level = pEntity.level;
-
-        SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
-        for (int i = 0; i < pEntity.itemHandler.getSlots(); i++)
-        {
-            inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
-        }
-
-        Optional<SmeltingRecipe> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, inventory, level);
-
-        if (hasRecipe(pEntity))
-        {
-            pEntity.itemHandler.extractItem(0, 1, false);
-            pEntity.itemHandler.setStackInSlot(1, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(1).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
-
-            Random random = new Random();
-            int slagRandom = random.nextInt(1, 11);
-
-            if (pEntity.itemHandler.getStackInSlot(2).getItem().equals(McRItemReg.SLAG.get()) || pEntity.itemHandler.getStackInSlot(2).getItem().equals(ItemStack.EMPTY.getItem()))
-            {
-                int putAmount = slagRandom;
-                if (canAddSlagWithChance(pEntity, putAmount))
-                {
-                    int currentInSlot = pEntity.itemHandler.getStackInSlot(2).getCount();
-                    pEntity.itemHandler.setStackInSlot(2, new ItemStack(McRItemReg.SLAG.get(), 1 + currentInSlot));
-                }
-            }
-
-            pEntity.resetProgress();
-        }
-
-    }
-
-    private static boolean canAddSlagWithChance (ElectricFurnaceBlockEntity pEntity, int putAmount)
-    {
-        return pEntity.itemHandler.getStackInSlot(2).getCount() + 1 <= 64 && putAmount == 1;
-    }
-
-    private static boolean hasRecipe (ElectricFurnaceBlockEntity entity)
-    {
-        Level level = entity.level;
-
-        SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
-        for (int i = 0; i < entity.itemHandler.getSlots(); i++)
-        {
-            inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
-        }
-
-        Optional<SmeltingRecipe> recipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, inventory, level);
-
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY));
-    }
-
-    private static boolean canInsertItemIntoOutputSlot (SimpleContainer inventory, ItemStack stack)
-    {
-        return inventory.getItem(1).getItem() == stack.getItem() || inventory.getItem(1).isEmpty();
-    }
-
-    private static boolean canInsertAmountIntoOutputSlot (SimpleContainer inventory)
-    {
-        return inventory.getItem(1).getMaxStackSize() > inventory.getItem(1).getCount();
-    }
-
-    public ElectricFurnaceBlockEntity getBlockEntity ()
+    public CoalGeneratorEntity getBlockEntity ()
     {
         return this;
     }
 }
+
