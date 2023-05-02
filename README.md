@@ -10,5 +10,5 @@
 
 1.19.4 is the most current minecraft version to be supported and will be the only version receiving updates at this time.
 
-***![Uploading 48065b10fd96ee0c5c050097a9cbdd35de89a6c5da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807099350adf1e27041c0420d4a045e38d1c3.png…]()
+***
 
