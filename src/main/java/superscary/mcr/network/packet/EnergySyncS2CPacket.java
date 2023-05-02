@@ -4,14 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import superscary.mcr.blocks.entity.CoalGeneratorEntity;
-import superscary.mcr.blocks.entity.CompressorEntity;
-import superscary.mcr.blocks.entity.ElectricFurnaceBlockEntity;
-import superscary.mcr.blocks.entity.InfuserBlockEntity;
-import superscary.mcr.gui.menu.CoalGeneratorMenu;
-import superscary.mcr.gui.menu.CompressorMenu;
-import superscary.mcr.gui.menu.ElectricFurnaceMenu;
-import superscary.mcr.gui.menu.InfuserMenu;
+import superscary.mcr.blocks.entity.*;
+import superscary.mcr.gui.menu.*;
 
 import java.util.function.Supplier;
 
@@ -81,6 +75,17 @@ public class EnergySyncS2CPacket
                 blockEntity.setEnergyLevel(energy);
 
                 if (Minecraft.getInstance().player.containerMenu instanceof CompressorMenu menu && menu.blockEntity.getBlockEntity().getBlockPos().equals(pos))
+                {
+                    blockEntity.setEnergyLevel(energy);
+                }
+
+            }
+
+            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ExtruderEntity blockEntity)
+            {
+                blockEntity.setEnergyLevel(energy);
+
+                if (Minecraft.getInstance().player.containerMenu instanceof ExtruderMenu menu && menu.blockEntity.getBlockEntity().getBlockPos().equals(pos))
                 {
                     blockEntity.setEnergyLevel(energy);
                 }

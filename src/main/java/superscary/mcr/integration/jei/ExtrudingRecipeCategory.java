@@ -1,7 +1,6 @@
 package superscary.mcr.integration.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -16,37 +15,33 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
 import superscary.mcr.blocks.McRBlockReg;
-import superscary.mcr.blocks.entity.InfuserBlockEntity;
-import superscary.mcr.recipe.CompressorRecipe;
-import superscary.mcr.recipe.InfuserRecipe;
+import superscary.mcr.recipe.ExtruderRecipe;
 
-import java.util.List;
-
-public class CompressingRecipeCategory implements IRecipeCategory<CompressorRecipe>
+public class ExtrudingRecipeCategory implements IRecipeCategory<ExtruderRecipe>
 {
 
-    public static final ResourceLocation UID = new ResourceLocation(McRMod.MODID, "compress");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(McRMod.MODID, "textures/gui/compressor_gui.png");
+    public static final ResourceLocation UID = new ResourceLocation(McRMod.MODID, "extrude");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(McRMod.MODID, "textures/gui/extrude_gui.png");
 
     private final IDrawable background;
     private final IDrawable icon;
 
-    public CompressingRecipeCategory (IGuiHelper helper)
+    public ExtrudingRecipeCategory (IGuiHelper helper)
     {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 80);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(McRBlockReg.COMPRESSOR.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(McRBlockReg.EXTRUDER.get()));
     }
 
     @Override
-    public @NotNull RecipeType<CompressorRecipe> getRecipeType ()
+    public @NotNull RecipeType<ExtruderRecipe> getRecipeType ()
     {
-        return JEIMcRPlugin.COMPRESSOR_TYPE;
+        return JEIMcRPlugin.EXTRUDER_TYPE;
     }
 
     @Override
     public @NotNull Component getTitle ()
     {
-        return Component.translatable("gui.mcr.compressor");
+        return Component.translatable("gui.mcr.extruder");
     }
 
     @Override
@@ -62,7 +57,7 @@ public class CompressingRecipeCategory implements IRecipeCategory<CompressorReci
     }
 
     @Override
-    public void setRecipe (@NotNull IRecipeLayoutBuilder builder, @NotNull CompressorRecipe recipe, @NotNull IFocusGroup focuses)
+    public void setRecipe (@NotNull IRecipeLayoutBuilder builder, @NotNull ExtruderRecipe recipe, @NotNull IFocusGroup focuses)
     {
         builder.addSlot(RecipeIngredientRole.INPUT, 56, 35).addIngredients(recipe.getIngredients().get(0));
 

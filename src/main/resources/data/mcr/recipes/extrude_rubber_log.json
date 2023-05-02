@@ -1,0 +1,12 @@
+{
+  "type": "mcr:extrude",
+  "ingredients": [
+    {
+      "item": "mcr:rubber_log"
+    }
+  ],
+  "output": {
+    "item": "mcr:sap",
+    "count": 1
+  }
+}

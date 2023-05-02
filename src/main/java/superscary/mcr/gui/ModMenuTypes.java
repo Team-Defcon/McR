@@ -9,10 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import superscary.mcr.McRMod;
-import superscary.mcr.gui.menu.CoalGeneratorMenu;
-import superscary.mcr.gui.menu.CompressorMenu;
-import superscary.mcr.gui.menu.ElectricFurnaceMenu;
-import superscary.mcr.gui.menu.InfuserMenu;
+import superscary.mcr.gui.menu.*;
 
 public class ModMenuTypes
 {
@@ -23,7 +20,7 @@ public class ModMenuTypes
     public static final RegistryObject<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU = registerMenuType(ElectricFurnaceMenu::new, "electric_furnace_menu");
     public static final RegistryObject<MenuType<CoalGeneratorMenu>> COAL_GENERATOR_MENU = registerMenuType(CoalGeneratorMenu::new, "coal_generator_menu");
     public static final RegistryObject<MenuType<CompressorMenu>> COMPRESSOR_MENU = registerMenuType(CompressorMenu::new, "compressor_menu");
-
+    public static final RegistryObject<MenuType<ExtruderMenu>> EXTRUDER_MENU = registerMenuType(ExtruderMenu::new, "extruder_menu");
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType (IContainerFactory<T> factory, String name)
     {

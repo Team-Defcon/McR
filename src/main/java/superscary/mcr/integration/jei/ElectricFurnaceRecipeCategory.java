@@ -30,7 +30,7 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
 
     public ElectricFurnaceRecipeCategory (IGuiHelper helper)
     {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 85);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 80);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(McRBlockReg.ELECTRIC_FURNACE.get()));
     }
 

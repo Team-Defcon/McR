@@ -74,9 +74,11 @@ public class McRBlockReg
     public static final RegistryObject<Block> COAL_GENERATOR = registerBlock("coal_generator",
             () -> new CoalGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
-
     public static final RegistryObject<Block> COMPRESSOR = registerBlock("compressor",
             () -> new CompressorBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(10f).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> EXTRUDER = registerBlock("extruder",
+            () -> new ExtruderBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
 
     /***

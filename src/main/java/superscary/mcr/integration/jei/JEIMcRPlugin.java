@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
 import superscary.mcr.recipe.CompressorRecipe;
+import superscary.mcr.recipe.ExtruderRecipe;
 import superscary.mcr.recipe.InfuserRecipe;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class JEIMcRPlugin implements IModPlugin
     public static RecipeType<InfuserRecipe> INFUSION_TYPE = new RecipeType<>(InfusingRecipeCategory.UID, InfuserRecipe.class);
     public static RecipeType<CompressorRecipe> COMPRESSOR_TYPE = new RecipeType<>(CompressingRecipeCategory.UID, CompressorRecipe.class);
     public static RecipeType<SmeltingRecipe> E_FURNACE_TYPE = new RecipeType<>(ElectricFurnaceRecipeCategory.UID, SmeltingRecipe.class);
+    public static RecipeType<ExtruderRecipe> EXTRUDER_TYPE = new RecipeType<>(ExtrudingRecipeCategory.UID, ExtruderRecipe.class);
 
     @Override
     public @NotNull ResourceLocation getPluginUid ()
@@ -36,6 +38,7 @@ public class JEIMcRPlugin implements IModPlugin
     {
         registration.addRecipeCategories(new InfusingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new CompressingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
@@ -51,6 +54,9 @@ public class JEIMcRPlugin implements IModPlugin
 
         List<SmeltingRecipe> recipesSmelting = rm.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMELTING);
         registration.addRecipes(E_FURNACE_TYPE, recipesSmelting);
+
+        List<ExtruderRecipe> recipesExtruder = rm.getAllRecipesFor(ExtruderRecipe.Type.INSTANCE);
+        registration.addRecipes(EXTRUDER_TYPE, recipesExtruder);
 
     }
 

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mcr:block/extruder"
+    },
+    "facing=south": {
+      "model": "mcr:block/extruder",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mcr:block/extruder",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mcr:block/extruder",
+      "y": 270
+    }
+  }
+}

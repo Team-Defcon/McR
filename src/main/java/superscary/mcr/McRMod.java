@@ -23,10 +23,7 @@ import superscary.mcr.blocks.entity.ModBlockEntities;
 import superscary.mcr.fluid.ModFluidTypes;
 import superscary.mcr.fluid.ModFluids;
 import superscary.mcr.gui.*;
-import superscary.mcr.gui.screen.CoalGeneratorScreen;
-import superscary.mcr.gui.screen.CompressorScreen;
-import superscary.mcr.gui.screen.ElectricFurnaceScreen;
-import superscary.mcr.gui.screen.InfuserScreen;
+import superscary.mcr.gui.screen.*;
 import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.recipe.ModRecipes;
@@ -69,6 +66,7 @@ public class McRMod
             event.accept(McRItemReg.RAW_BLACK_OPAL);
             event.accept(McRItemReg.RUBBER);
             event.accept(McRItemReg.STICKY_RESIN);
+            event.accept(McRItemReg.SAP);
             event.accept(McRItemReg.RAW_RUBBER);
             event.accept(McRItemReg.STEEL_INGOT);
             event.accept(McRItemReg.RAW_STEEL);
@@ -108,6 +106,7 @@ public class McRMod
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
             event.accept(McRBlockReg.COAL_GENERATOR);
             event.accept(McRBlockReg.COMPRESSOR);
+            event.accept(McRBlockReg.EXTRUDER);
 
             event.accept(McRItemReg.SCREWDRIVER);
             event.accept(McRItemReg.HAMMER);
@@ -137,6 +136,7 @@ public class McRMod
             MenuScreens.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
             MenuScreens.register(ModMenuTypes.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
             MenuScreens.register(ModMenuTypes.COMPRESSOR_MENU.get(), CompressorScreen::new);
+            MenuScreens.register(ModMenuTypes.EXTRUDER_MENU.get(), ExtruderScreen::new);
 
         }
     }

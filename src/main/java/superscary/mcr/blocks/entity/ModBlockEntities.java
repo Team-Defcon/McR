@@ -17,6 +17,8 @@ public class ModBlockEntities
     public static final RegistryObject<BlockEntityType<ElectricFurnaceBlockEntity>> ELECTRIC_FURNACE = BLOCK_ENTITIES.register("electric_furnace", () -> BlockEntityType.Builder.of(ElectricFurnaceBlockEntity::new, McRBlockReg.ELECTRIC_FURNACE.get()).build(null));
     public static final RegistryObject<BlockEntityType<CoalGeneratorEntity>> COAL_GENERATOR = BLOCK_ENTITIES.register("coal_generator", () -> BlockEntityType.Builder.of(CoalGeneratorEntity::new, McRBlockReg.COAL_GENERATOR.get()).build(null));
     public static final RegistryObject<BlockEntityType<CompressorEntity>> COMPRESSOR = BLOCK_ENTITIES.register("compressor", () -> BlockEntityType.Builder.of(CompressorEntity::new, McRBlockReg.COMPRESSOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ExtruderEntity>> EXTRUDER = BLOCK_ENTITIES.register("extruder", () -> BlockEntityType.Builder.of(ExtruderEntity::new, McRBlockReg.EXTRUDER.get()).build(null));
+
 
     public static void register (IEventBus eventBus)
     {
