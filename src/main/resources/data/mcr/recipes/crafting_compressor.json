@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "pmp",
+    "gcg"
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_ingot"
+    },
+    "p": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "m": {
+      "item": "mcr:machine_base"
+    },
+    "g": {
+      "item": "mcr:steel_gear"
+    },
+    "c": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "mcr:compressor"
+  }
+}

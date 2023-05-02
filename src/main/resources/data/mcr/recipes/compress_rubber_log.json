@@ -1,0 +1,12 @@
+{
+  "type": "mcr:compress",
+  "ingredients": [
+    {
+      "item": "mcr:rubber_log"
+    }
+  ],
+  "output": {
+    "item": "mcr:raw_rubber",
+    "count": 1
+  }
+}

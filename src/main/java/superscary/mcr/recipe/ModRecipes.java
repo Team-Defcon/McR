@@ -14,7 +14,7 @@ public class ModRecipes
 
     public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSING_SERIALIZER = SERIALIZERS.register("infusing", () -> InfuserRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<ElectricFurnaceRecipe>> ELECTRIC_FURNACE_SERIALIZER = SERIALIZERS.register("smelting", () -> ElectricFurnaceRecipe.Serializer.INSTANCE);
-
+    public static final RegistryObject<RecipeSerializer<CompressorRecipe>> COMPRESSOR_RECIPE = SERIALIZERS.register("compress", () -> CompressorRecipe.Serializer.INSTANCE);
 
     public static void register (IEventBus eventBus)
     {

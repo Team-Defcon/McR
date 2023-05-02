@@ -22,6 +22,9 @@
   "item.mcr.iron_gear": "Iron Gear",
   "item.mcr.tin_gear": "Tin Gear",
   "item.mcr.steel_gear": "Steel Gear",
+  "item.mcr.tin_ingot": "Tin Ingot",
+  "item.mcr.lead_ingot": "Lead Ingot",
+  "item.mcr.tome": "Tome of Knowledge: Vol. 1",
 
   "block.mcr.black_opal_block": "Block of Black Opal",
   "block.mcr.black_opal_ore": "Black Opal Ore",
@@ -33,15 +36,16 @@
   "block.mcr.infuser": "Infuser",
   "block.mcr.electric_furnace": "Electric Furnace",
   "block.mcr.coal_generator": "Coal Generator",
+  "block.mcr.compressor": "Compressor",
   "block.mcr.lead_ore": "Lead Ore",
 
-  "block.mcr.ebony_log": "Ebony Log",
-  "block.mcr.ebony_planks": "Ebony Planks",
-  "block.mcr.ebony_wood": "Ebony Wood",
-  "block.mcr.stripped_ebony_log": "Stripped Ebony Log",
-  "block.mcr.stripped_ebony_wood": "Stripped Ebony Wood",
-  "block.mcr.ebony_leaves": "Ebony Leaves",
-  "block.mcr.ebony_sapling": "Ebony Sapling",
+  "block.mcr.rubber_log": "Rubber Log",
+  "block.mcr.rubber_planks": "Rubber Planks",
+  "block.mcr.rubber_wood": "Rubber Wood",
+  "block.mcr.stripped_rubber_log": "Stripped Rubber Log",
+  "block.mcr.stripped_rubber_wood": "Stripped Rubber Wood",
+  "block.mcr.rubber_leaves": "Rubber Leaves",
+  "block.mcr.rubber_sapling": "Rubber Sapling",
 
   "fluid_type.mcr.petroleum_fluid": "Petroleum",
   "fluid_type.mcr.oil_fluid": "Oil",
@@ -50,6 +54,9 @@
   "creativemodetab.mcr": "McR",
 
   "gui.mcr.infuser": "Infuser",
+  "gui.mcr.electric_furnace": "Electric Furnace",
+  "gui.mcr.coal_generator": "Coal Generator",
+  "gui.mcr.compressor": "Compressor",
 
   "mcr.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "mcr.tooltip.liquid.amount": "%s mB"

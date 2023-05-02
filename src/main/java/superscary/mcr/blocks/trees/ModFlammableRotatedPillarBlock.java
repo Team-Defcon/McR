@@ -42,14 +42,14 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock
     {
         if (context.getItemInHand().getItem() instanceof AxeItem)
         {
-            if (state.is(McRBlockReg.EBONY_LOG.get()))
+            if (state.is(McRBlockReg.RUBBER_LOG.get()))
             {
-                return McRBlockReg.STRIPPED_EBONY_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+                return McRBlockReg.STRIPPED_RUBBER_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
 
-            if (state.is(McRBlockReg.EBONY_WOOD.get()))
+            if (state.is(McRBlockReg.RUBBER_WOOD.get()))
             {
-                return McRBlockReg.STRIPPED_EBONY_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+                return McRBlockReg.STRIPPED_RUBBER_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
 
         }

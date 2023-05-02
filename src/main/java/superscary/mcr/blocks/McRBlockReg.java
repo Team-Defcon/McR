@@ -15,10 +15,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import superscary.mcr.McRMod;
-import superscary.mcr.blocks.machine.CoalGeneratorBlock;
-import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
-import superscary.mcr.blocks.machine.InfuserBlock;
-import superscary.mcr.blocks.machine.MachineBase;
+import superscary.mcr.blocks.machine.*;
 import superscary.mcr.blocks.trees.ModFlammableRotatedPillarBlock;
 import superscary.mcr.fluid.ModFluids;
 import superscary.mcr.worldgen.tree.EbonyTreeGrower;
@@ -78,6 +75,10 @@ public class McRBlockReg
             () -> new CoalGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> COMPRESSOR = registerBlock("compressor",
+            () -> new CompressorBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(10f).requiresCorrectToolForDrops()));
+
     /***
      *
      *
@@ -85,19 +86,19 @@ public class McRBlockReg
      *
      *
      */
-    public static final RegistryObject<Block> EBONY_LOG = registerBlock("ebony_log",
+    public static final RegistryObject<Block> RUBBER_LOG = registerBlock("rubber_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)
                     .strength(5F).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> EBONY_WOOD = registerBlock("ebony_wood",
+    public static final RegistryObject<Block> RUBBER_WOOD = registerBlock("rubber_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)
                     .strength(5F).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> STRIPPED_EBONY_LOG = registerBlock("stripped_ebony_log",
+    public static final RegistryObject<Block> STRIPPED_RUBBER_LOG = registerBlock("stripped_rubber_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)
                     .strength(5F).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> STRIPPED_EBONY_WOOD = registerBlock("stripped_ebony_wood",
+    public static final RegistryObject<Block> STRIPPED_RUBBER_WOOD = registerBlock("stripped_rubber_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)
                     .strength(5F)));
-    public static final RegistryObject<Block> EBONY_PLANKS = registerBlock("ebony_planks",
+    public static final RegistryObject<Block> RUBBER_PLANKS = registerBlock("rubber_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
                     .strength(5F)) {
                 @Override
@@ -118,7 +119,7 @@ public class McRBlockReg
                     return 20;
                 }
             });
-    public static final RegistryObject<Block> EBONY_LEAVES = registerBlock("ebony_leaves",
+    public static final RegistryObject<Block> RUBBER_LEAVES = registerBlock("rubber_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)
                     .strength(5F)) {
 
@@ -140,7 +141,7 @@ public class McRBlockReg
                     return 60;
                 }
             });
-    public static final RegistryObject<Block> EBONY_SAPLING = registerBlock("ebony_sapling",
+    public static final RegistryObject<Block> RUBBER_SAPLING = registerBlock("rubber_sapling",
             () -> new SaplingBlock(new EbonyTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
 

@@ -1,0 +1,31 @@
+{
+  "parent": "mcr:block/machine",
+  "textures": {
+    "sides": "mcr:block/compressor/side",
+    "front": "mcr:block/compressor/front",
+    "west": "mcr:block/compressor/side",
+    "east": "mcr:block/compressor/side",
+    "south": "mcr:block/compressor/back",
+    "up": "mcr:block/compressor/top",
+    "down": "mcr:block/compressor/bottom"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        270,
+        90,
+        90
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  }
+}

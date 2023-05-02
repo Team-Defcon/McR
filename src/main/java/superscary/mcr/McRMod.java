@@ -22,13 +22,14 @@ import superscary.mcr.blocks.McRBlockReg;
 import superscary.mcr.blocks.entity.ModBlockEntities;
 import superscary.mcr.fluid.ModFluidTypes;
 import superscary.mcr.fluid.ModFluids;
+import superscary.mcr.gui.*;
+import superscary.mcr.gui.screen.CoalGeneratorScreen;
+import superscary.mcr.gui.screen.CompressorScreen;
+import superscary.mcr.gui.screen.ElectricFurnaceScreen;
+import superscary.mcr.gui.screen.InfuserScreen;
 import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.recipe.ModRecipes;
-import superscary.mcr.gui.CoalGeneratorScreen;
-import superscary.mcr.gui.ElectricFurnaceScreen;
-import superscary.mcr.gui.InfuserScreen;
-import superscary.mcr.gui.ModMenuTypes;
 
 @Mod(McRMod.MODID)
 public class McRMod
@@ -37,6 +38,7 @@ public class McRMod
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+
     public McRMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -62,6 +64,7 @@ public class McRMod
     {
         if (event.getTab() == McRCreativeModeTabs.MCR_ITEMS)
         {
+            event.accept(McRItemReg.TOME);
             event.accept(McRItemReg.BLACK_OPAL);
             event.accept(McRItemReg.RAW_BLACK_OPAL);
             event.accept(McRItemReg.RUBBER);
@@ -92,18 +95,19 @@ public class McRMod
             event.accept(McRBlockReg.ENDSTONE_BLACK_OPAL_ORE);
             event.accept(McRBlockReg.NETHERRACK_BLACK_OPAL_ORE);
             event.accept(McRBlockReg.MACHINE_BASE);
-            event.accept(McRBlockReg.EBONY_LEAVES);
-            event.accept(McRBlockReg.EBONY_LOG);
-            event.accept(McRBlockReg.EBONY_PLANKS);
-            event.accept(McRBlockReg.EBONY_SAPLING);
-            event.accept(McRBlockReg.EBONY_WOOD);
-            event.accept(McRBlockReg.STRIPPED_EBONY_LOG);
-            event.accept(McRBlockReg.STRIPPED_EBONY_WOOD);
+            event.accept(McRBlockReg.RUBBER_LEAVES);
+            event.accept(McRBlockReg.RUBBER_LOG);
+            event.accept(McRBlockReg.RUBBER_PLANKS);
+            event.accept(McRBlockReg.RUBBER_SAPLING);
+            event.accept(McRBlockReg.RUBBER_WOOD);
+            event.accept(McRBlockReg.STRIPPED_RUBBER_LOG);
+            event.accept(McRBlockReg.STRIPPED_RUBBER_WOOD);
             event.accept(McRBlockReg.URANIUM_ORE);
             event.accept(McRBlockReg.LEAD_ORE);
             event.accept(McRBlockReg.INFUSER);
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
             event.accept(McRBlockReg.COAL_GENERATOR);
+            event.accept(McRBlockReg.COMPRESSOR);
 
             event.accept(McRItemReg.SCREWDRIVER);
             event.accept(McRItemReg.HAMMER);
@@ -132,6 +136,7 @@ public class McRMod
             MenuScreens.register(ModMenuTypes.INFUSER_MENU.get(), InfuserScreen::new);
             MenuScreens.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
             MenuScreens.register(ModMenuTypes.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
+            MenuScreens.register(ModMenuTypes.COMPRESSOR_MENU.get(), CompressorScreen::new);
 
         }
     }

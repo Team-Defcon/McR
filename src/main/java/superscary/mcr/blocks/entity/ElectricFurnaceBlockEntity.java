@@ -30,7 +30,7 @@ import superscary.mcr.blocks.machine.ElectricFurnaceBlock;
 import superscary.mcr.items.McRItemReg;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.gui.ElectricFurnaceMenu;
+import superscary.mcr.gui.menu.ElectricFurnaceMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;

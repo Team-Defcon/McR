@@ -32,7 +32,7 @@ import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.network.packet.FluidSyncS2CPacket;
 import superscary.mcr.recipe.InfuserRecipe;
-import superscary.mcr.gui.InfuserMenu;
+import superscary.mcr.gui.menu.InfuserMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;

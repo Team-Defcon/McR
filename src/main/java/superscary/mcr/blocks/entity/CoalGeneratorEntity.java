@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import superscary.mcr.blocks.machine.CoalGeneratorBlock;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.gui.CoalGeneratorMenu;
+import superscary.mcr.gui.menu.CoalGeneratorMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
 import java.util.Map;

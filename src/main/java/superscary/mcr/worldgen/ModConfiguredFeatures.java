@@ -45,9 +45,9 @@ public class ModConfiguredFeatures
 
 
         register(context, EBONY_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(McRBlockReg.EBONY_LOG.get()),
+                BlockStateProvider.simple(McRBlockReg.RUBBER_LOG.get()),
                 new StraightTrunkPlacer(5, 6, 3),
-                BlockStateProvider.simple(McRBlockReg.EBONY_LEAVES.get()),
+                BlockStateProvider.simple(McRBlockReg.RUBBER_LEAVES.get()),
                 new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
                 new TwoLayersFeatureSize(1, 0, 2)).build());
 
