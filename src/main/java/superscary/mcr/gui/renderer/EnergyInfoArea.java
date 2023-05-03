@@ -5,12 +5,15 @@ import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class EnergyInfoArea extends InfoArea
 {
 
     private final IEnergyStorage energy;
+
+    private final DecimalFormat format = new DecimalFormat("#.#");
 
     public EnergyInfoArea(int xMin, int yMin)
     {
@@ -30,20 +33,20 @@ public class EnergyInfoArea extends InfoArea
 
     public List<Component> getTooltips()
     {
-        return List.of(Component.literal(energy.getEnergyStored()+"/"+energy.getMaxEnergyStored()+" FE"));
+        return List.of(Component.literal(energy.getEnergyStored()+"/"+energy.getMaxEnergyStored()+" FE"), Component.literal("(" + (int) getPercentage() + "%)"));
+    }
+
+    public double getPercentage()
+    {
+        return Math.floor(((double) energy.getEnergyStored() / energy.getMaxEnergyStored()) * 100.0);
     }
 
     @Override
     public void draw(PoseStack transform)
     {
         final int height = area.getHeight();
-        int stored = (int)(height*(energy.getEnergyStored()/(float)energy.getMaxEnergyStored()));
-        fillGradient(
-                transform,
-                area.getX(), area.getY()+(height-stored),
-                area.getX() + area.getWidth(), area.getY() + area.getHeight(),
-                0xffb51500, 0xff600b00
-        );
+        int stored = (int) (height * (energy.getEnergyStored() / (float)energy.getMaxEnergyStored()));
+        fillGradient(transform, area.getX(),area.getY() + (height - stored),area.getX() + area.getWidth(),area.getY() + area.getHeight(),0xffb51500, 0xff600b00);
     }
 
 }

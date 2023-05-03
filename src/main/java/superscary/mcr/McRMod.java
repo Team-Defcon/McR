@@ -7,11 +7,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -20,6 +23,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 import superscary.mcr.blocks.McRBlockReg;
 import superscary.mcr.blocks.entity.ModBlockEntities;
+import superscary.mcr.blocks.entity.renderer.InfuserBlockEntityRenderer;
+import superscary.mcr.config.McRCommonConfig;
+import superscary.mcr.config.McrClientConfig;
 import superscary.mcr.fluid.ModFluidTypes;
 import superscary.mcr.fluid.ModFluids;
 import superscary.mcr.gui.*;
@@ -39,6 +45,11 @@ public class McRMod
     public McRMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        LOGGER.debug("Loading Configs...");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, McRCommonConfig.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, McrClientConfig.CONFIG);
+        LOGGER.debug("Done.");
 
         McRItemReg.register(modEventBus);
         McRBlockReg.register(modEventBus);
@@ -123,7 +134,7 @@ public class McRMod
     public static class ClientModEvents
     {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
+        public static void onClientSetup (FMLClientSetupEvent event)
         {
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_OIL.get(), RenderType.solid());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_OIL.get(), RenderType.solid());
@@ -137,7 +148,13 @@ public class McRMod
             MenuScreens.register(ModMenuTypes.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
             MenuScreens.register(ModMenuTypes.COMPRESSOR_MENU.get(), CompressorScreen::new);
             MenuScreens.register(ModMenuTypes.EXTRUDER_MENU.get(), ExtruderScreen::new);
+        }
 
+        @SubscribeEvent
+        public static void registerRenderers (final EntityRenderersEvent.RegisterRenderers event)
+        {
+            event.registerBlockEntityRenderer(ModBlockEntities.INFUSER.get(), InfuserBlockEntityRenderer::new);
         }
     }
+
 }

@@ -25,6 +25,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import superscary.mcr.blocks.machine.CoalGeneratorBlock;
+import superscary.mcr.config.McRCommonConfig;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.gui.menu.CoalGeneratorMenu;
@@ -34,6 +35,10 @@ import java.util.Map;
 
 public class CoalGeneratorEntity extends BlockEntity implements MenuProvider
 {
+
+    private static final int FE_TICK = McRCommonConfig.getInstance().coalGeneratorGenPerTick.get();
+    private int burnTime = 1600;
+
     private final ItemStackHandler itemHandler = new ItemStackHandler(5)
     {
         @Override
@@ -54,7 +59,7 @@ public class CoalGeneratorEntity extends BlockEntity implements MenuProvider
         }
     };
 
-    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(100000, 256)
+    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(McRCommonConfig.getInstance().coalGeneratorFECapacity.get(), McRCommonConfig.getInstance().coalGeneratorMaxOutput.get())
     {
         @Override
         public void onEnergyChanged ()
@@ -63,17 +68,6 @@ public class CoalGeneratorEntity extends BlockEntity implements MenuProvider
             ModMessages.sendToClients(new EnergySyncS2CPacket(this.energy, getBlockPos()));
         }
 
-        @Override
-        public boolean canReceive ()
-        {
-            return false;
-        }
-
-        @Override
-        public boolean canExtract ()
-        {
-            return true;
-        }
     };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
@@ -249,19 +243,61 @@ public class CoalGeneratorEntity extends BlockEntity implements MenuProvider
         //burn fuel item to generate FE
         if (isFuel(pEntity))
         {
-            if (pEntity.ENERGY_STORAGE.getEnergyStored() + 12000 < pEntity.ENERGY_STORAGE.getMaxEnergyStored())
+            if (pEntity.ENERGY_STORAGE.getEnergyStored() + FE_TICK < pEntity.ENERGY_STORAGE.getMaxEnergyStored())
             {
-                pEntity.itemHandler.extractItem(0, 1, false);
-                pEntity.ENERGY_STORAGE.setEnergy(pEntity.ENERGY_STORAGE.getEnergyStored() + 12000);
+                if (pEntity.burnTime <= 0)
+                {
+                    pEntity.itemHandler.extractItem(0, 1, false);
+                    pEntity.setBurnTime();
+                }
+                pEntity.burn();
+                pEntity.ENERGY_STORAGE.setEnergy(pEntity.ENERGY_STORAGE.getEnergyStored() + FE_TICK);
                 ModMessages.sendToClients(new EnergySyncS2CPacket(pEntity.ENERGY_STORAGE.getEnergyStored(), pos));
+            }
+            else if (pEntity.ENERGY_STORAGE.getMaxEnergyStored() - pEntity.ENERGY_STORAGE.getEnergyStored() <= FE_TICK)
+            {
+                burnNextTick(pEntity, pEntity.ENERGY_STORAGE.getMaxEnergyStored() - pEntity.ENERGY_STORAGE.getEnergyStored());
+                pEntity.burn();
+            }
+            else
+            {
+                holdProgress(pEntity);
             }
         }
         else
         {
+            pEntity.setBurnTime();
             pEntity.resetProgress();
         }
 
 
+    }
+
+    private static void burnNextTick (CoalGeneratorEntity pEntity, int burnAmount)
+    {
+        pEntity.ENERGY_STORAGE.setEnergy(pEntity.ENERGY_STORAGE.getEnergyStored() + burnAmount);
+        ModMessages.sendToClients(new EnergySyncS2CPacket(pEntity.ENERGY_STORAGE.getEnergyStored(), pEntity.worldPosition));
+    }
+
+    private static void holdProgress (CoalGeneratorEntity pEntity)
+    {
+        int time = pEntity.burnTime;
+        pEntity.setBurnTime(time);
+    }
+
+    private void setBurnTime (int time)
+    {
+        burnTime = time;
+    }
+
+    private void setBurnTime ()
+    {
+        setBurnTime(1600);
+    }
+
+    private void burn ()
+    {
+        burnTime--;
     }
 
     private static boolean isFuel(CoalGeneratorEntity pEntity)

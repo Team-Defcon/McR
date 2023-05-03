@@ -25,12 +25,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import superscary.mcr.blocks.machine.InfuserBlock;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.network.packet.FluidSyncS2CPacket;
+import superscary.mcr.network.packet.ItemStackSyncS2CPacket;
 import superscary.mcr.recipe.InfuserRecipe;
 import superscary.mcr.gui.menu.InfuserMenu;
 import superscary.mcr.toolkit.ModEnergyStorage;
@@ -49,6 +51,10 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
         protected void onContentsChanged (int slot)
         {
             setChanged();
+            if (!level.isClientSide())
+            {
+                ModMessages.sendToClients(new ItemStackSyncS2CPacket(this, worldPosition));
+            }
         }
 
         @Override
@@ -110,6 +116,26 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     public FluidStack getFluidStack()
     {
         return this.FLUID_TANK.getFluid();
+    }
+
+    public ItemStack getRenderStack ()
+    {
+        ItemStack stack;
+        if (!itemHandler.getStackInSlot(2).isEmpty())
+        {
+            stack = itemHandler.getStackInSlot(2);
+        }
+        else stack = itemHandler.getStackInSlot(1);
+
+        return stack;
+    }
+
+    public void setHandler (ItemStackHandler itemStackHandler)
+    {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++)
+        {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
     }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
@@ -292,6 +318,8 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
             return;
         }
 
+        ModMessages.sendToClients(new ItemStackSyncS2CPacket(pEntity.itemHandler, pEntity.getBlockPos()));
+
         if (hasRecipe(pEntity) && hasEnoughEnergy(pEntity))
         {
             pEntity.progress++;
@@ -422,4 +450,5 @@ public class InfuserBlockEntity extends BlockEntity implements MenuProvider
     {
         return this;
     }
+
 }

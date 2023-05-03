@@ -2,10 +2,13 @@ package superscary.mcr.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.McRMod;
@@ -69,6 +72,9 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
 
         blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
 
+        FormattedCharSequence formattedcharsequence = menu.blockEntity.getDisplayName().getVisualOrderText();
+        Font f = Minecraft.getInstance().font;
+        Minecraft.getInstance().font.draw(pPoseStack, formattedcharsequence, (float) (x - f.width(formattedcharsequence) / 2) + 88, y + 4, 0x555555);
         renderProgressArrow(pPoseStack, x, y);
         energyInfoArea.draw(pPoseStack);
     }
