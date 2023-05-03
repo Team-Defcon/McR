@@ -1,16 +1,16 @@
 modLoader="javafml"
 loaderVersion="[44,)"
 license="All rights reserved"
-issueTrackerURL="https://github.com/SuperScary/McR/issues"
+issueTrackerURL="https://github.com/Team-Defcon/McR/issues"
 [[mods]] #mandatory
 modId="mcr" #mandatory
 version="0.0.1-ALPHA" #mandatory
 displayName="McR" #mandatory
-updateJSONURL="https://raw.githubusercontent.com/SuperScary/McR/main/update.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/Team-Defcon/McR/main/update.json" #optional
 displayURL="https://curseforge.com/minecraft/mc-mods/mcr" #optional
 logoFile="logo.png" #optional
 credits="SuperScary" #optional
-authors="SuperScary" #optional
+authors="Team Defcon" #optional
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
 # IGNORE_SERVER_VERSION means that your mod will not cause a red X if it's present on the server but not on the client. This is what you should use if you're a server only mod.
@@ -21,7 +21,7 @@ displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specifi
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-    New tech for early and late game.
+    Processing, automation, storage, and late game additions.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.mcr]] #optional
