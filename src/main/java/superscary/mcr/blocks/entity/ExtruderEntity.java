@@ -121,7 +121,7 @@ public class ExtruderEntity extends BlockEntity implements MenuProvider
     @Override
     public @NotNull Component getDisplayName ()
     {
-        return Component.translatable("gui.mcr.extrude");
+        return Component.translatable("gui.mcr.extruder");
     }
 
     @Nullable
