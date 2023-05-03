@@ -81,6 +81,10 @@ public class McRBlockReg
             () -> new ExtruderBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> EMPTY_MACHINE_FRAME = registerBlock("empty_machine_frame",
+            () -> new EmptyMachineFrameBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
+                    .strength(8f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
     /***
      *
      *

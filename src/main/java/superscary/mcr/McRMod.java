@@ -97,6 +97,7 @@ public class McRMod
             event.accept(McRItemReg.OIL_BUCKET);
             event.accept(McRItemReg.PETROLEUM_BUCKET);
             event.accept(McRItemReg.CRUDE_OIL_BUCKET);
+            event.accept(McRItemReg.DIMENSIONAL_SHARD);
 
             event.accept(McRBlockReg.BLACK_OPAL_BLOCK);
             event.accept(McRBlockReg.BLACK_OPAL_ORE);
@@ -113,6 +114,7 @@ public class McRMod
             event.accept(McRBlockReg.STRIPPED_RUBBER_WOOD);
             event.accept(McRBlockReg.URANIUM_ORE);
             event.accept(McRBlockReg.LEAD_ORE);
+            event.accept(McRBlockReg.EMPTY_MACHINE_FRAME);
             event.accept(McRBlockReg.INFUSER);
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
             event.accept(McRBlockReg.COAL_GENERATOR);
