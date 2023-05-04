@@ -28,25 +28,6 @@ public class Screwdriver extends Item
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use (@NotNull Level world, @NotNull Player player, @NotNull InteractionHand hand)
-    {
-        BlockHitResult ray = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
-        BlockPos lookPos = ray.getBlockPos();
-        Block block = world.getBlockState(lookPos).getBlock();
-
-        if (KeyboardHelper.isHoldingShift() && (block instanceof MachineBase || block instanceof EntityMachineBase))
-        {
-            ItemStack stack = player.getItemInHand(hand);
-            stack.setDamageValue(stack.getDamageValue() + 1);
-            block.playerDestroy(world, player, lookPos, world.getBlockState(lookPos), null, new ItemStack(block.asItem()));
-            world.destroyBlock(lookPos, false); // what is the boolean??
-            if (stack.getDamageValue() >= stack.getMaxDamage()) stack.setCount(0);
-            return super.use(world, player, hand);
-        }
-        return super.use(world, player, hand);
-    }
-
-    @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag)
     {
         if (KeyboardHelper.isHoldingShift())

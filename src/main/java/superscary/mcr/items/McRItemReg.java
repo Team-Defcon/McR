@@ -36,7 +36,7 @@ public class McRItemReg
     public static final RegistryObject<Item> TIN_GEAR = ITEMS.register("tin_gear", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STEEL_GEAR = ITEMS.register("steel_gear", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SAP = ITEMS.register("sap", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> DIMENSIONAL_SHARD = ITEMS.register("dimensional_shard", () -> new DimensionalShard(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> DIMENSIONAL_SHARD = ITEMS.register("dimensional_shard", () -> new DimensionalShard(new Item.Properties()));
 
     public static final RegistryObject<Item> SCREWDRIVER = ITEMS.register("screwdriver", () -> new Screwdriver(new Item.Properties().durability(200)));
     public static final RegistryObject<Item> HAMMER = ITEMS.register("hammer", () -> new Hammer(new Item.Properties().durability(200)));

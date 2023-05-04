@@ -1,0 +1,12 @@
+{
+  "type": "mcr:compress",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_star"
+    }
+  ],
+  "output": {
+    "item": "mcr:dimensional_shard",
+    "count": 1
+  }
+}

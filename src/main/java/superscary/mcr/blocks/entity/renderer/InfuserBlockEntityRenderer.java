@@ -41,19 +41,19 @@ public class InfuserBlockEntityRenderer implements BlockEntityRenderer<InfuserBl
         switch (pBlockEntity.getBlockState().getValue(InfuserBlock.FACING))
         {
             case NORTH -> { //south done
-                pPoseStack.translate(1.3f, 1.45f, -0.01f);
+                pPoseStack.translate(0.55f, 1.55f, -0.01f);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180));
             }
             case EAST -> { //west done
-                pPoseStack.translate(2.01f, 1.45f, 1.3f);
+                pPoseStack.translate(2.01f, 1.55f, 0.55f);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(90));
             }
             case SOUTH -> { //north done
-                pPoseStack.translate(.7f, 1.45f, 2.01f);
+                pPoseStack.translate(1.45f, 1.55f, 2.01f);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(0));
             }
             case WEST -> { //east
-                pPoseStack.translate(-0.01f, 1.45f, .7f);
+                pPoseStack.translate(-0.01f, 1.55f, 1.45f);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(270));
             }
         }
