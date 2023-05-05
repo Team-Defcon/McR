@@ -37,6 +37,7 @@ public class McRItemReg
     public static final RegistryObject<Item> STEEL_GEAR = ITEMS.register("steel_gear", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SAP = ITEMS.register("sap", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DIMENSIONAL_SHARD = ITEMS.register("dimensional_shard", () -> new DimensionalShard(new Item.Properties()));
+    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> SCREWDRIVER = ITEMS.register("screwdriver", () -> new Screwdriver(new Item.Properties().durability(200)));
     public static final RegistryObject<Item> HAMMER = ITEMS.register("hammer", () -> new Hammer(new Item.Properties().durability(200)));
@@ -49,6 +50,9 @@ public class McRItemReg
 
     public static final RegistryObject<Item> CRUDE_OIL_BUCKET = ITEMS.register("crude_oil_bucket",
             () -> new BucketItem(ModFluids.SOURCE_CRUDE_OIL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final RegistryObject<Item> SALINE_BUCKET = ITEMS.register("saline_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_SALINE, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final RegistryObject<Item> TOME = ITEMS.register("tome",
             () -> new Tome(new Item.Properties()));

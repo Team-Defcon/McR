@@ -27,10 +27,15 @@ public class JEIMcRPlugin implements IModPlugin
     public static RecipeType<SmeltingRecipe> E_FURNACE_TYPE = new RecipeType<>(ElectricFurnaceRecipeCategory.UID, SmeltingRecipe.class);
     public static RecipeType<ExtruderRecipe> EXTRUDER_TYPE = new RecipeType<>(ExtrudingRecipeCategory.UID, ExtruderRecipe.class);
 
+    public JEIMcRPlugin ()
+    {
+
+    }
+
     @Override
     public @NotNull ResourceLocation getPluginUid ()
     {
-        return new ResourceLocation(McRMod.MODID, "jei_plugin");
+        return new ResourceLocation(McRMod.MODID, "mcr");
     }
 
     @Override
@@ -39,7 +44,7 @@ public class JEIMcRPlugin implements IModPlugin
         registration.addRecipeCategories(new InfusingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new CompressingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-        registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ExtrudingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override

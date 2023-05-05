@@ -80,10 +80,14 @@ public class McRBlockReg
     public static final RegistryObject<Block> EXTRUDER = registerBlock("extruder",
             () -> new ExtruderBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> CHEMICAL_WASHER = registerBlock("chemical_washer",
+            () -> new ChemicalWasherBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(10f).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> EMPTY_MACHINE_FRAME = registerBlock("empty_machine_frame",
             () -> new EmptyMachineFrameBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
                     .strength(8f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+
 
     /***
      *
@@ -149,6 +153,8 @@ public class McRBlockReg
             });
     public static final RegistryObject<Block> RUBBER_SAPLING = registerBlock("rubber_sapling",
             () -> new SaplingBlock(new EbonyTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> SALT_BLOCK = registerBlock("salt_block",
+            () -> new SandBlock(0xF3FAFD, BlockBehaviour.Properties.copy(Blocks.SAND).strength(3f)));
 
 
     /***
@@ -165,6 +171,9 @@ public class McRBlockReg
 
     public static final RegistryObject<LiquidBlock> CRUDE_OIL_FLUID_BLOCK = BLOCKS.register("crude_oil_fluid_block",
             () -> new LiquidBlock(ModFluids.SOURCE_CRUDE_OIL, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
+    public static final RegistryObject<LiquidBlock> SALINE_FLUID_BLOCK = BLOCKS.register("saline_fluid_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_SALINE, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock (String name, Supplier<T> block)

@@ -30,6 +30,14 @@ public class ModFluids
     public static final RegistryObject<FlowingFluid> FLOWING_CRUDE_OIL = FLUIDS.register("flowing_crude_oil",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.CRUDE_OIL_PROPERTIES));
 
+    public static final RegistryObject<FlowingFluid> SOURCE_SALINE = FLUIDS.register("saline_fluid",
+            () -> new ForgeFlowingFluid.Source(ModFluids.SALINE_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SALINE = FLUIDS.register("flowing_saline",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.SALINE_PROPERTIES));
+
+    /**
+     * FLUID PROPERTIES
+     */
     public static final ForgeFlowingFluid.Properties OIL_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.OIL_FLUID_TYPE, SOURCE_OIL, FLOWING_OIL).slopeFindDistance(2).levelDecreasePerBlock(2).explosionResistance(0).block(McRBlockReg.OIL_FLUID_BLOCK).bucket(McRItemReg.OIL_BUCKET);
 
@@ -39,6 +47,8 @@ public class ModFluids
     public static final ForgeFlowingFluid.Properties CRUDE_OIL_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.CRUDE_OIL_FLUID_TYPE, SOURCE_CRUDE_OIL, FLOWING_CRUDE_OIL).slopeFindDistance(2).explosionResistance(0).levelDecreasePerBlock(2).block(McRBlockReg.CRUDE_OIL_FLUID_BLOCK).bucket(McRItemReg.CRUDE_OIL_BUCKET);
 
+    public static final ForgeFlowingFluid.Properties SALINE_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ModFluidTypes.SALINE_FLUID_TYPE, SOURCE_SALINE, FLOWING_SALINE).slopeFindDistance(2).explosionResistance(0).levelDecreasePerBlock(2).block(McRBlockReg.SALINE_FLUID_BLOCK).bucket(McRItemReg.SALINE_BUCKET);
 
     public static void register (IEventBus eventBus)
     {
