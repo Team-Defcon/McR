@@ -124,7 +124,7 @@ public class McRMod
             event.accept(McRBlockReg.COAL_GENERATOR);
             event.accept(McRBlockReg.COMPRESSOR);
             event.accept(McRBlockReg.EXTRUDER);
-            event.accept(McRBlockReg.CHEMICAL_WASHER);
+            event.accept(McRBlockReg.CHEMICAL_MIXER);
 
             event.accept(McRItemReg.SCREWDRIVER);
             event.accept(McRItemReg.HAMMER);
@@ -157,6 +157,7 @@ public class McRMod
             MenuScreens.register(ModMenuTypes.COAL_GENERATOR_MENU.get(), CoalGeneratorScreen::new);
             MenuScreens.register(ModMenuTypes.COMPRESSOR_MENU.get(), CompressorScreen::new);
             MenuScreens.register(ModMenuTypes.EXTRUDER_MENU.get(), ExtruderScreen::new);
+            MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerScreen::new);
         }
 
         @SubscribeEvent

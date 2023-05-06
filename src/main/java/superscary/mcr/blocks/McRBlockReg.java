@@ -80,8 +80,8 @@ public class McRBlockReg
     public static final RegistryObject<Block> EXTRUDER = registerBlock("extruder",
             () -> new ExtruderBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> CHEMICAL_WASHER = registerBlock("chemical_washer",
-            () -> new ChemicalWasherBlock(BlockBehaviour.Properties.of(Material.METAL)
+    public static final RegistryObject<Block> CHEMICAL_MIXER = registerBlock("chemical_mixer",
+            () -> new ChemicalMixerBlock(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(10f).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> EMPTY_MACHINE_FRAME = registerBlock("empty_machine_frame",

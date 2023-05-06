@@ -21,15 +21,15 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
-import superscary.mcr.blocks.entity.ChemicalWasherEntity;
+import superscary.mcr.blocks.entity.ChemicalMixerEntity;
 import superscary.mcr.blocks.entity.ModBlockEntities;
 
-public class ChemicalWasherBlock extends EntityMachineBase
+public class ChemicalMixerBlock extends EntityMachineBase
 {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public ChemicalWasherBlock (Properties properties)
+    public ChemicalMixerBlock (Properties properties)
     {
         super(properties);
     }
@@ -74,9 +74,9 @@ public class ChemicalWasherBlock extends EntityMachineBase
         if (pState.getBlock() != pNewState.getBlock())
         {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ChemicalWasherEntity)
+            if (blockEntity instanceof ChemicalMixerEntity)
             {
-                ((ChemicalWasherEntity) blockEntity).drops();
+                ((ChemicalMixerEntity) blockEntity).drops();
             }
         }
 
@@ -89,9 +89,9 @@ public class ChemicalWasherBlock extends EntityMachineBase
         if (!pLevel.isClientSide)
         {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if (entity instanceof ChemicalWasherEntity)
+            if (entity instanceof ChemicalMixerEntity)
             {
-                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (ChemicalWasherEntity) entity, pPos);
+                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (ChemicalMixerEntity) entity, pPos);
             }
             else
             {
@@ -106,14 +106,14 @@ public class ChemicalWasherBlock extends EntityMachineBase
     @Override
     public BlockEntity newBlockEntity (BlockPos pos, BlockState state)
     {
-        return new ChemicalWasherEntity(pos, state);
+        return new ChemicalMixerEntity(pos, state);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker (Level level, BlockState state, BlockEntityType<T> type)
     {
-        return createTickerHelper(type, ModBlockEntities.CHEMICAL_WASHER.get(), ChemicalWasherEntity::tick);
+        return createTickerHelper(type, ModBlockEntities.CHEMICAL_MIXER.get(), ChemicalMixerEntity::tick);
     }
 
 }

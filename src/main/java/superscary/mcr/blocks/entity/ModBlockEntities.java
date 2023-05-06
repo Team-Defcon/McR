@@ -19,7 +19,7 @@ public class ModBlockEntities
     public static final RegistryObject<BlockEntityType<CompressorEntity>> COMPRESSOR = BLOCK_ENTITIES.register("compressor", () -> BlockEntityType.Builder.of(CompressorEntity::new, McRBlockReg.COMPRESSOR.get()).build(null));
     public static final RegistryObject<BlockEntityType<ExtruderEntity>> EXTRUDER = BLOCK_ENTITIES.register("extruder", () -> BlockEntityType.Builder.of(ExtruderEntity::new, McRBlockReg.EXTRUDER.get()).build(null));
     public static final RegistryObject<BlockEntityType<EmptyMachineFrameEntity>> EMPTY_MACHINE_FRAME = BLOCK_ENTITIES.register("empty_machine_frame", () -> BlockEntityType.Builder.of(EmptyMachineFrameEntity::new, McRBlockReg.EMPTY_MACHINE_FRAME.get()).build(null));
-    public static final RegistryObject<BlockEntityType<ChemicalWasherEntity>> CHEMICAL_WASHER = BLOCK_ENTITIES.register("chemical_washer", () -> BlockEntityType.Builder.of(ChemicalWasherEntity::new, McRBlockReg.CHEMICAL_WASHER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ChemicalMixerEntity>> CHEMICAL_MIXER = BLOCK_ENTITIES.register("chemical_mixer", () -> BlockEntityType.Builder.of(ChemicalMixerEntity::new, McRBlockReg.CHEMICAL_MIXER.get()).build(null));
 
     public static void register (IEventBus eventBus)
     {

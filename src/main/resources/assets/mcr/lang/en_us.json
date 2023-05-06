@@ -46,7 +46,7 @@
   "block.mcr.coal_generator": "Coal Generator",
   "block.mcr.compressor": "Compressor",
   "block.mcr.extruder": "Extruder",
-  "block.mcr.chemical_washer": "Chemical Washer",
+  "block.mcr.chemical_mixer": "Chemical Mixer",
 
   "block.mcr.rubber_log": "Rubber Log",
   "block.mcr.rubber_planks": "Rubber Planks",
@@ -68,7 +68,7 @@
   "gui.mcr.coal_generator": "Coal Generator",
   "gui.mcr.compressor": "Compressor",
   "gui.mcr.extruder": "Extruder",
-  "gui.mcr.chemical_washer": "Chemical Washer",
+  "gui.mcr.chemical_mixer": "Chemical Mixer",
 
   "mcr.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "mcr.tooltip.liquid.amount": "%s mB"
