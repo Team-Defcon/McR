@@ -1,0 +1,16 @@
+{
+  "type": "mcr:chemical_mixer",
+  "catalyst": [
+    {
+      "item": "mcr:salt"
+    }
+  ],
+  "input": {
+    "FluidName": "minecraft:water",
+    "Amount": 250
+  },
+  "output": {
+    "FluidName": "mcr:saline_fluid",
+    "Amount": 1000
+  }
+}

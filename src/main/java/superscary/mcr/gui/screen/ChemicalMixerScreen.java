@@ -102,7 +102,7 @@ public class ChemicalMixerScreen extends AbstractContainerScreen<ChemicalMixerMe
         Minecraft.getInstance().font.draw(pPoseStack, formattedcharsequence, (float) (x - f.width(formattedcharsequence) / 2) + 88, y + 4, 0x555555);
         renderProgressArrow(pPoseStack, x, y);
         energyInfoArea.draw(pPoseStack);
-        inputRenderer.render(pPoseStack, x + 55, y + 15, menu.getInputFluidStack());
+        inputRenderer.render(pPoseStack, x + 46, y + 15, menu.getInputFluidStack());
         outputRenderer.render(pPoseStack, x + 92, y + 15, menu.getOutputFluidStack());
     }
 

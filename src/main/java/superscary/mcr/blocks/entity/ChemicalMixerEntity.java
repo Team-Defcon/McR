@@ -31,13 +31,12 @@ import superscary.mcr.blocks.machine.ChemicalMixerBlock;
 import superscary.mcr.gui.menu.ChemicalMixerMenu;
 import superscary.mcr.network.ModMessages;
 import superscary.mcr.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.network.packet.FluidSyncS2CPacket;
 import superscary.mcr.network.packet.ItemStackSyncS2CPacket;
+import superscary.mcr.network.packet.MultiFluidSyncS2CPacket;
 import superscary.mcr.recipe.ChemicalMixerRecipe;
 import superscary.mcr.toolkit.ModEnergyStorage;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
 {
@@ -88,7 +87,7 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
             setChanged();
             if (!level.isClientSide())
             {
-                ModMessages.sendToClients(new FluidSyncS2CPacket(getInputFluidStack(), getOutputFluidStack(), worldPosition));
+                ModMessages.sendToClients(new MultiFluidSyncS2CPacket(List.of(getInputFluidStack(), getOutputFluidStack()), worldPosition));
             }
         }
 
@@ -114,7 +113,7 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
             setChanged();
             if (!level.isClientSide())
             {
-                ModMessages.sendToClients(new FluidSyncS2CPacket(getInputFluidStack(), getOutputFluidStack(), worldPosition));
+                ModMessages.sendToClients(new MultiFluidSyncS2CPacket(List.of(getInputFluidStack(), getOutputFluidStack()), worldPosition));
             }
         }
 
@@ -227,7 +226,7 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
     @Override
     public @NotNull Component getDisplayName ()
     {
-        return Component.translatable("gui.mcr.chemical_washer");
+        return Component.translatable("gui.mcr.chemical_mixer");
     }
 
     @Nullable
@@ -235,7 +234,7 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
     public AbstractContainerMenu createMenu (int id, @NotNull Inventory inventory, @NotNull Player player)
     {
         ModMessages.sendToClients(new EnergySyncS2CPacket(this.ENERGY_STORAGE.getEnergyStored(), getBlockPos()));
-        ModMessages.sendToClients(new FluidSyncS2CPacket(getInputFluidStack(), getOutputFluidStack(), getBlockPos()));
+        ModMessages.sendToClients(new MultiFluidSyncS2CPacket(List.of(getInputFluidStack(), getOutputFluidStack()), getBlockPos()));
         return new ChemicalMixerMenu(id, inventory, this, this.data);
     }
 
@@ -288,7 +287,30 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
 
         if (cap == ForgeCapabilities.FLUID_HANDLER)
         {
-            return lazyInputFluidHandler.cast();
+            if (side == null)
+            {
+                return lazyInputFluidHandler.cast();
+            }
+
+            if (directionWrappedHandlerMap.containsKey(side))
+            {
+                Direction localDir = this.getBlockState().getValue(ChemicalMixerBlock.FACING);
+
+                if (side == Direction.UP || side == Direction.DOWN)
+                {
+                    return directionWrappedHandlerMap.get(side).cast();
+                }
+
+                return switch (localDir)
+                {
+                    default -> directionWrappedHandlerMap.get(side.getOpposite()).cast();
+                    case EAST -> lazyOutputFluidHandler.cast();
+                    case SOUTH -> directionWrappedHandlerMap.get(side).cast();
+                    case WEST -> directionWrappedHandlerMap.get(side.getCounterClockWise()).cast();
+                };
+
+            }
+
         }
 
         return super.getCapability(cap, side);

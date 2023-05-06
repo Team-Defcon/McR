@@ -111,7 +111,7 @@ public class ChemicalMixerRecipe implements Recipe<SimpleContainer>
         }
 
         public static final Type INSTANCE = new Type();
-        public static final String ID = "chemical_washer";
+        public static final String ID = "chemical_mixer";
 
     }
 
@@ -119,7 +119,7 @@ public class ChemicalMixerRecipe implements Recipe<SimpleContainer>
     {
 
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(McRMod.MODID, "chemical_washer");
+        public static final ResourceLocation ID = new ResourceLocation(McRMod.MODID, "chemical_mixer");
 
         @Override
         public @NotNull ChemicalMixerRecipe fromJson (@NotNull ResourceLocation pRecipeId, @NotNull JsonObject pSerializedRecipe)
@@ -127,9 +127,9 @@ public class ChemicalMixerRecipe implements Recipe<SimpleContainer>
             FluidStack output = FluidJSONUtil.readFluid(pSerializedRecipe.get("output").getAsJsonObject());
 
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
+            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "catalyst");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
-            FluidStack fluid = FluidJSONUtil.readFluid(pSerializedRecipe.get("fluid").getAsJsonObject());
+            FluidStack fluid = FluidJSONUtil.readFluid(pSerializedRecipe.get("input").getAsJsonObject());
 
             for (int i = 0; i < inputs.size(); i++)
             {
