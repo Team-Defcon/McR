@@ -92,6 +92,17 @@ public class EnergySyncS2CPacket
 
             }
 
+            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ChemicalMixerEntity blockEntity)
+            {
+                blockEntity.setEnergyLevel(energy);
+
+                if (Minecraft.getInstance().player.containerMenu instanceof ChemicalMixerMenu menu && menu.blockEntity.getBlockEntity().getBlockPos().equals(pos))
+                {
+                    blockEntity.setEnergyLevel(energy);
+                }
+
+            }
+
         });
 
         return true;

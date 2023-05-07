@@ -66,7 +66,7 @@ public class ChemicalMixerScreen extends AbstractContainerScreen<ChemicalMixerMe
 
     private void renderFluidAreaTooltips (PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y)
     {
-        if (isMouseAboveArea(pMouseX, pMouseY, x, y, 55, 15))
+        if (isMouseAboveArea(pMouseX, pMouseY, x, y, 46, 15))
         {
             renderTooltip(pPoseStack, inputRenderer.getTooltip(menu.getInputFluidStack(), TooltipFlag.Default.NORMAL), Optional.empty(), pMouseX - x, pMouseY - y);
         }

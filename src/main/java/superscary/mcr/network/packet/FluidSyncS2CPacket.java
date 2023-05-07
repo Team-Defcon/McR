@@ -5,9 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.network.NetworkEvent;
-import superscary.mcr.blocks.entity.ChemicalMixerEntity;
 import superscary.mcr.blocks.entity.InfuserBlockEntity;
-import superscary.mcr.gui.menu.ChemicalMixerMenu;
 import superscary.mcr.gui.menu.InfuserMenu;
 
 import java.util.function.Supplier;

@@ -17,10 +17,10 @@ import java.util.function.Supplier;
 
 public class MultiFluidSyncS2CPacket
 {
-    private final Collection<FluidStack> fluidStacks;
+    private final List<FluidStack> fluidStacks;
     private final BlockPos pos;
 
-    public MultiFluidSyncS2CPacket (Collection<FluidStack> fluidStacks, BlockPos pos)
+    public MultiFluidSyncS2CPacket (List<FluidStack> fluidStacks, BlockPos pos)
     {
         this.fluidStacks = fluidStacks;
         this.pos = pos;
@@ -45,14 +45,13 @@ public class MultiFluidSyncS2CPacket
         {
             if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ChemicalMixerEntity blockEntity)
             {
-                blockEntity.setInputFluid((FluidStack) fluidStacks.toArray()[0]);
-                blockEntity.setOutputFluidStack((FluidStack) fluidStacks.toArray()[1]);
+                blockEntity.setInputFluid(fluidStacks.get(0));
+                blockEntity.setOutputFluidStack(fluidStacks.get(1));
 
-                if (Minecraft.getInstance().player.containerMenu instanceof ChemicalMixerMenu menu &&
-                        menu.getBlockEntity().getBlockPos().equals(pos))
+                if (Minecraft.getInstance().player.containerMenu instanceof ChemicalMixerMenu menu && menu.getBlockEntity().getBlockPos().equals(pos))
                 {
-                    menu.setInputFluid((FluidStack) fluidStacks.toArray()[0]);
-                    menu.setOutputFluidStack((FluidStack) fluidStacks.toArray()[1]);
+                    menu.setInputFluid(fluidStacks.get(0));
+                    menu.setOutputFluidStack(fluidStacks.get(1));
                 }
             }
 

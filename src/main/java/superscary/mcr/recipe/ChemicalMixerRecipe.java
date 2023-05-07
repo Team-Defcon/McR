@@ -69,7 +69,7 @@ public class ChemicalMixerRecipe implements Recipe<SimpleContainer>
     @Override
     public ItemStack assemble (@NotNull SimpleContainer container, @NotNull RegistryAccess access)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class ChemicalMixerRecipe implements Recipe<SimpleContainer>
     @Override
     public ItemStack getResultItem (RegistryAccess access)
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

@@ -2,7 +2,6 @@ package superscary.mcr.blocks.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -59,9 +58,9 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
         {
             return switch (slot)
             {
-                case 0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+                case 0, 2 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
                 case 1 -> true;
-                case 2 -> false;
+                case 3 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
@@ -339,11 +338,13 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
     @Override
     protected void saveAdditional (CompoundTag nbt)
     {
+        CompoundTag outputTag = new CompoundTag();
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("chemwasher.progress", this.progress);
         nbt.putInt("chemwasher.energy", ENERGY_STORAGE.getEnergyStored());
         nbt = INPUT_FLUID_TANK.writeToNBT(nbt);
-        nbt = OUTPUT_FLUID_TANK.writeToNBT(nbt);
+        outputTag = OUTPUT_FLUID_TANK.writeToNBT(outputTag);
+        nbt.put("OUTPUT_FLUID_TANK", outputTag);
 
         super.saveAdditional(nbt);
     }
@@ -352,11 +353,12 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
     public void load (CompoundTag nbt)
     {
         super.load(nbt);
+        CompoundTag outputTag = nbt.getCompound("OUTPUT_FLUID_TANK");
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         progress = nbt.getInt("chemwasher.progress");
         ENERGY_STORAGE.setEnergy(nbt.getInt("chemwasher.energy"));
         INPUT_FLUID_TANK.readFromNBT(nbt);
-        OUTPUT_FLUID_TANK.readFromNBT(nbt);
+        OUTPUT_FLUID_TANK.readFromNBT(outputTag);
     }
 
     public void drops ()
@@ -466,7 +468,7 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
             pEntity.itemHandler.extractItem(1, 1, false);
             if (canFillOutput(pEntity, 1000))
             {
-                pEntity.OUTPUT_FLUID_TANK.setFluid(new FluidStack(recipe.get().getOutputFluid(), 1000 + recipe.get().getOutputFluid().getAmount()));
+                pEntity.OUTPUT_FLUID_TANK.setFluid(new FluidStack(recipe.get().getOutputFluid(), 1000));
             }
 
             pEntity.resetProgress();
@@ -491,28 +493,30 @@ public class ChemicalMixerEntity extends BlockEntity implements MenuProvider
 
         Optional<ChemicalMixerRecipe> recipe = level.getRecipeManager().getRecipeFor(ChemicalMixerRecipe.Type.INSTANCE, inventory, level);
 
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY)) && hasCorrectFluidInTank(entity, recipe) && hasCorrectFluidAmountInTank(entity, recipe);
+        //TODO: Figure out why recipe#isPresent is returning false. Check ChemicalMixerRecipe for recipe issues.
+
+        return recipe.isPresent() && canInsertAmountIntoOutputTank(entity.OUTPUT_FLUID_TANK) && canInsertFluidIntoOutputTank(entity, recipe.get().getOutputFluid()) && hasCorrectFluidInInputTank(entity, recipe) && hasCorrectFluidAmountInInputTank(entity, recipe);
 
     }
 
-    private static boolean hasCorrectFluidAmountInTank (ChemicalMixerEntity entity, Optional<ChemicalMixerRecipe> recipe)
+    private static boolean hasCorrectFluidAmountInInputTank (ChemicalMixerEntity entity, Optional<ChemicalMixerRecipe> recipe)
     {
         return entity.INPUT_FLUID_TANK.getFluidAmount() >= recipe.get().getFluid().getAmount();
     }
 
-    private static boolean hasCorrectFluidInTank (ChemicalMixerEntity entity, Optional<ChemicalMixerRecipe> recipe)
+    private static boolean hasCorrectFluidInInputTank (ChemicalMixerEntity entity, Optional<ChemicalMixerRecipe> recipe)
     {
         return recipe.get().getFluid().equals(entity.INPUT_FLUID_TANK.getFluid());
     }
 
-    private static boolean canInsertItemIntoOutputSlot (SimpleContainer inventory, ItemStack stack)
+    private static boolean canInsertFluidIntoOutputTank (ChemicalMixerEntity entity, FluidStack stack)
     {
-        return inventory.getItem(2).getItem() == stack.getItem() || inventory.getItem(2).isEmpty();
+        return entity.OUTPUT_FLUID_TANK.getFluidAmount() == 0 || entity.OUTPUT_FLUID_TANK.getFluid().isFluidEqual(stack);
     }
 
-    private static boolean canInsertAmountIntoOutputSlot (SimpleContainer inventory)
+    private static boolean canInsertAmountIntoOutputTank (FluidTank tank)
     {
-        return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
+        return tank.getSpace() >= 1000;
     }
 
     public ChemicalMixerEntity getBlockEntity ()
