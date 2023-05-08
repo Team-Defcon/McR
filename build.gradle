@@ -6,7 +6,7 @@ plugins {
 }
 
 version = '1.0'
-group = 'superscary.mcr' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'superscary.mcr.revelations' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'mcr'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -105,7 +105,7 @@ minecraft {
             args '--mod', 'mcr', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                examplemod {
+                mcr {
                     source sourceSets.main
                 }
             }

@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/Team-Defcon/McR/issues"
 [[mods]] #mandatory
 modId="mcr" #mandatory
 version="0.0.1-ALPHA" #mandatory
-displayName="McR" #mandatory
+displayName="McR - Revelations" #mandatory
 updateJSONURL="https://raw.githubusercontent.com/Team-Defcon/McR/main/update.json" #optional
 displayURL="https://curseforge.com/minecraft/mc-mods/mcr" #optional
 logoFile="logo.png" #optional
