@@ -88,6 +88,10 @@ public class McRBlockReg
             () -> new EmptyMachineFrameBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
                     .strength(8f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> BARREL = registerBlock("barrel",
+            () -> new Barrel(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(5f)));
+
 
     /***
      *

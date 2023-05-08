@@ -69,6 +69,8 @@
   "gui.mcr.compressor": "Compressor",
   "gui.mcr.extruder": "Extruder",
   "gui.mcr.chemical_mixer": "Chemical Mixer",
+  "gui.mcr.barrel": "%s: %s / %s mB",
+  "gui.mcr.barrel.empty": "Empty",
 
   "mcr.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "mcr.tooltip.liquid.amount": "%s mB"

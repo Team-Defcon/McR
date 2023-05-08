@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mcr:block/barrel"
+    },
+    "facing=south": {
+      "model": "mcr:block/barrel",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mcr:block/barrel",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mcr:block/barrel",
+      "y": 270
+    }
+  }
+}

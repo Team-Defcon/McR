@@ -118,6 +118,7 @@ public class McRMod
             event.accept(McRBlockReg.LEAD_ORE);
             event.accept(McRBlockReg.SALT_BLOCK);
 
+            event.accept(McRBlockReg.BARREL);
             event.accept(McRBlockReg.EMPTY_MACHINE_FRAME);
             event.accept(McRBlockReg.INFUSER);
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
