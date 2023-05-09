@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "s s",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "mcr:barrel"
+  }
+}

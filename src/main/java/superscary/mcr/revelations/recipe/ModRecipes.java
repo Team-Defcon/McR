@@ -6,17 +6,19 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import superscary.mcr.revelations.Revelations;
+import superscary.mcr.revelations.recipe.serializer.*;
 
 public class ModRecipes
 {
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Revelations.MODID);
 
-    public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSING_SERIALIZER = SERIALIZERS.register("infusing", () -> InfuserRecipe.Serializer.INSTANCE);
-    public static final RegistryObject<RecipeSerializer<ElectricFurnaceRecipe>> ELECTRIC_FURNACE_SERIALIZER = SERIALIZERS.register("smelting", () -> ElectricFurnaceRecipe.Serializer.INSTANCE);
-    public static final RegistryObject<RecipeSerializer<CompressorRecipe>> COMPRESSOR_RECIPE = SERIALIZERS.register("compress", () -> CompressorRecipe.Serializer.INSTANCE);
-    public static final RegistryObject<RecipeSerializer<ExtruderRecipe>> EXTRUDER_RECIPE = SERIALIZERS.register("extrude", () -> ExtruderRecipe.Serializer.INSTANCE);
-    public static final RegistryObject<RecipeSerializer<ChemicalMixerRecipe>> CHEMICAL_MIXER_RECIPE = SERIALIZERS.register("chemical_mixer", () -> ChemicalMixerRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSING_SERIALIZER = SERIALIZERS.register("infusing", InfuserRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<ElectricFurnaceRecipe>> ELECTRIC_FURNACE_SERIALIZER = SERIALIZERS.register("smelting", ElectricFurnaceRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<CompressorRecipe>> COMPRESSOR_SERIALIZER = SERIALIZERS.register("compress", CompressorRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<ExtruderRecipe>> EXTRUDER_SERIALIZER = SERIALIZERS.register("extrude", ExtruderRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<ChemicalMixerRecipe>> CHEMICAL_MIXER_SERIALIZER = SERIALIZERS.register("chemical_mixer", ChemicalMixerRecipeSerializer::new);
+    public static final RegistryObject<RecipeSerializer<ForgeRecipe>> FORGE_SERIALIZER = SERIALIZERS.register("forge", ForgeRecipeSerializer::new);
 
     public static void register (IEventBus eventBus)
     {

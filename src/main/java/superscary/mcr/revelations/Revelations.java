@@ -33,6 +33,7 @@ import superscary.mcr.revelations.gui.screen.*;
 import superscary.mcr.revelations.items.McRItemReg;
 import superscary.mcr.revelations.network.ModMessages;
 import superscary.mcr.revelations.recipe.ModRecipes;
+import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 
 @Mod(Revelations.MODID)
 public class Revelations
@@ -57,7 +58,9 @@ public class Revelations
         ModFluidTypes.registerOil(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+
         ModRecipes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
@@ -120,6 +123,7 @@ public class Revelations
 
             event.accept(McRBlockReg.BARREL);
             event.accept(McRBlockReg.EMPTY_MACHINE_FRAME);
+            event.accept(McRBlockReg.FORGE);
             event.accept(McRBlockReg.INFUSER);
             event.accept(McRBlockReg.ELECTRIC_FURNACE);
             event.accept(McRBlockReg.COAL_GENERATOR);
@@ -159,6 +163,7 @@ public class Revelations
             MenuScreens.register(ModMenuTypes.COMPRESSOR_MENU.get(), CompressorScreen::new);
             MenuScreens.register(ModMenuTypes.EXTRUDER_MENU.get(), ExtruderScreen::new);
             MenuScreens.register(ModMenuTypes.CHEMICAL_MIXER_MENU.get(), ChemicalMixerScreen::new);
+            MenuScreens.register(ModMenuTypes.FORGE_MENU.get(), ForgeScreen::new);
         }
 
         @SubscribeEvent

@@ -32,6 +32,7 @@ import superscary.mcr.revelations.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.revelations.network.packet.ItemStackSyncS2CPacket;
 import superscary.mcr.revelations.network.packet.MultiFluidSyncS2CPacket;
 import superscary.mcr.revelations.recipe.ChemicalMixerRecipe;
+import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 import superscary.mcr.revelations.toolkit.ModEnergyStorage;
 
 import java.util.*;
@@ -459,7 +460,7 @@ public class ChemicalMixerEntity extends MachineBaseEntity implements MenuProvid
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<ChemicalMixerRecipe> recipe = level.getRecipeManager().getRecipeFor(ChemicalMixerRecipe.Type.INSTANCE, inventory, level);
+        Optional<ChemicalMixerRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CHEMICAL_MIXER.get(), inventory, level);
 
         if (hasRecipe(pEntity))
         {
@@ -490,7 +491,7 @@ public class ChemicalMixerEntity extends MachineBaseEntity implements MenuProvid
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<ChemicalMixerRecipe> recipe = level.getRecipeManager().getRecipeFor(ChemicalMixerRecipe.Type.INSTANCE, inventory, level);
+        Optional<ChemicalMixerRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CHEMICAL_MIXER.get(), inventory, level);
 
         //TODO: Figure out why recipe#isPresent is returning false. Check ChemicalMixerRecipe for recipe issues.
 

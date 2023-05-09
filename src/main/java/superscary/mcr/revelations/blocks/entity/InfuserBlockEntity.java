@@ -33,6 +33,7 @@ import superscary.mcr.revelations.network.packet.FluidSyncS2CPacket;
 import superscary.mcr.revelations.network.packet.ItemStackSyncS2CPacket;
 import superscary.mcr.revelations.recipe.InfuserRecipe;
 import superscary.mcr.revelations.gui.menu.InfuserMenu;
+import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 import superscary.mcr.revelations.toolkit.ModEnergyStorage;
 
 import java.util.Map;
@@ -395,7 +396,7 @@ public class InfuserBlockEntity extends MachineBaseEntity implements MenuProvide
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(InfuserRecipe.Type.INSTANCE, inventory, level);
+        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSER.get(), inventory, level);
 
         if (hasRecipe(pEntity))
         {
@@ -418,7 +419,7 @@ public class InfuserBlockEntity extends MachineBaseEntity implements MenuProvide
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(InfuserRecipe.Type.INSTANCE, inventory, level);
+        Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSER.get(), inventory, level);
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY)) && hasCorrectFluidInTank(entity, recipe) && hasCorrectFluidAmountInTank(entity, recipe);
 

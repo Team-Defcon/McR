@@ -14,6 +14,7 @@ import superscary.mcr.revelations.Revelations;
 import superscary.mcr.revelations.recipe.CompressorRecipe;
 import superscary.mcr.revelations.recipe.ExtruderRecipe;
 import superscary.mcr.revelations.recipe.InfuserRecipe;
+import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 
 import java.util.List;
 import java.util.Objects;
@@ -51,16 +52,16 @@ public class JEIMcRPlugin implements IModPlugin
     public void registerRecipes (IRecipeRegistration registration)
     {
         RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-        List<InfuserRecipe> recipesInfusing = rm.getAllRecipesFor(InfuserRecipe.Type.INSTANCE);
+        List<InfuserRecipe> recipesInfusing = rm.getAllRecipesFor(ModRecipeTypes.INFUSER.get());
         registration.addRecipes(INFUSION_TYPE, recipesInfusing);
 
-        List<CompressorRecipe> recipesCompressor = rm.getAllRecipesFor(CompressorRecipe.Type.INSTANCE);
+        List<CompressorRecipe> recipesCompressor = rm.getAllRecipesFor(ModRecipeTypes.COMPRESSOR.get());
         registration.addRecipes(COMPRESSOR_TYPE, recipesCompressor);
 
         List<SmeltingRecipe> recipesSmelting = rm.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMELTING);
         registration.addRecipes(E_FURNACE_TYPE, recipesSmelting);
 
-        List<ExtruderRecipe> recipesExtruder = rm.getAllRecipesFor(ExtruderRecipe.Type.INSTANCE);
+        List<ExtruderRecipe> recipesExtruder = rm.getAllRecipesFor(ModRecipeTypes.EXTRUDER.get());
         registration.addRecipes(EXTRUDER_TYPE, recipesExtruder);
 
     }

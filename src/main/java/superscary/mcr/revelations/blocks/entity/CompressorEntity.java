@@ -28,6 +28,7 @@ import superscary.mcr.revelations.gui.menu.CompressorMenu;
 import superscary.mcr.revelations.network.ModMessages;
 import superscary.mcr.revelations.network.packet.EnergySyncS2CPacket;
 import superscary.mcr.revelations.recipe.CompressorRecipe;
+import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 import superscary.mcr.revelations.toolkit.ModEnergyStorage;
 
 import java.util.Map;
@@ -281,7 +282,7 @@ public class CompressorEntity extends MachineBaseEntity implements MenuProvider
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<CompressorRecipe> recipe = level.getRecipeManager().getRecipeFor(CompressorRecipe.Type.INSTANCE, inventory, level);
+        Optional<CompressorRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.COMPRESSOR.get(), inventory, level);
 
         if (hasRecipe(pEntity))
         {
@@ -303,7 +304,7 @@ public class CompressorEntity extends MachineBaseEntity implements MenuProvider
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<CompressorRecipe> recipe = level.getRecipeManager().getRecipeFor(CompressorRecipe.Type.INSTANCE, inventory, level);
+        Optional<CompressorRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.COMPRESSOR.get(), inventory, level);
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY));
     }

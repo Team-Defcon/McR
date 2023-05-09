@@ -27,7 +27,9 @@ public class McRBlockReg
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Revelations.MODID);
 
-    public static Block FORGE;
+    public static final RegistryObject<Block> FORGE = registerBlock("forge",
+            () -> new ForgeBlock(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(3f).requiresCorrectToolForDrops()));
     public static Block REFORGER;
     public static Block CALIBRATION_TABLE;
     public static Block RECALIBRATION_TABLE;

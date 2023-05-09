@@ -1,0 +1,20 @@
+{
+  "type": "mcr:forge",
+  "pattern": [
+    "ssss",
+    "ssss",
+    "ssss",
+    "ssss"
+  ],
+  "key": {
+    "s": {
+      "item": "mcr:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "mcr:barrel"
+  },
+  "catalyst": {
+    "item": ""
+  }
+}

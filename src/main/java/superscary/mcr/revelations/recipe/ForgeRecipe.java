@@ -3,44 +3,36 @@ package superscary.mcr.revelations.recipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 
-public class InfuserRecipe implements Recipe<SimpleContainer>
+public class ForgeRecipe implements Recipe<Container>
 {
 
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
-    public final FluidStack fluidStack;
 
-    public InfuserRecipe (ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, FluidStack fluidStack)
+    public ForgeRecipe (ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems)
     {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
-        this.fluidStack = fluidStack;
     }
 
     @Override
-    public boolean matches (@NotNull SimpleContainer pContainer, Level pLevel)
+    public boolean matches (@NotNull Container pContainer, Level pLevel)
     {
         if (pLevel.isClientSide)
         {
             return false;
         }
 
-        return recipeItems.get(0).test(pContainer.getItem(1));
-    }
-
-    public FluidStack getFluid ()
-    {
-        return fluidStack;
+        return recipeItems.get(0).test(pContainer.getItem(0));
     }
 
     @Override
@@ -50,7 +42,7 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
     }
 
     @Override
-    public @NotNull ItemStack assemble (@NotNull SimpleContainer container, @NotNull RegistryAccess access)
+    public @NotNull ItemStack assemble (@NotNull Container container, @NotNull RegistryAccess access)
     {
         return output;
     }
@@ -62,7 +54,7 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
     }
 
     @Override
-    public ItemStack getResultItem (RegistryAccess access)
+    public @NotNull ItemStack getResultItem (RegistryAccess access)
     {
         return output.copy();
     }
@@ -76,13 +68,13 @@ public class InfuserRecipe implements Recipe<SimpleContainer>
     @Override
     public @NotNull RecipeSerializer<?> getSerializer ()
     {
-        return ModRecipes.INFUSING_SERIALIZER.get();
+        return ModRecipes.FORGE_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType ()
     {
-        return ModRecipeTypes.INFUSER.get();
+        return ModRecipeTypes.FORGE.get();
     }
 
 }

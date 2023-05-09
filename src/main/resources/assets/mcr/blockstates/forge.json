@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mcr:block/forge"
+    },
+    "facing=south": {
+      "model": "mcr:block/forge",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mcr:block/forge",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mcr:block/forge",
+      "y": 270
+    }
+  }
+}

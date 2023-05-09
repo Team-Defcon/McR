@@ -42,6 +42,7 @@
   "block.mcr.barrel": "Barrel",
 
   "block.mcr.machine_base": "Machine Base",
+  "block.mcr.forge": "Forge",
   "block.mcr.infuser": "Infuser",
   "block.mcr.electric_furnace": "Electric Furnace",
   "block.mcr.coal_generator": "Coal Generator",
@@ -70,6 +71,7 @@
   "gui.mcr.compressor": "Compressor",
   "gui.mcr.extruder": "Extruder",
   "gui.mcr.chemical_mixer": "Chemical Mixer",
+  "gui.mcr.forge": "Forge",
   "gui.mcr.barrel": "%s: %s / %s mB",
   "gui.mcr.barrel.empty": "Empty",
 

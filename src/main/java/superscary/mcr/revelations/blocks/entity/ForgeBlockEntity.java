@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,20 +25,20 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import superscary.mcr.revelations.blocks.machine.ExtruderBlock;
-import superscary.mcr.revelations.gui.menu.ExtruderMenu;
+import superscary.mcr.revelations.blocks.machine.ForgeBlock;
+import superscary.mcr.revelations.gui.menu.ForgeMenu;
 import superscary.mcr.revelations.network.ModMessages;
 import superscary.mcr.revelations.network.packet.EnergySyncS2CPacket;
-import superscary.mcr.revelations.recipe.ExtruderRecipe;
+import superscary.mcr.revelations.recipe.ForgeRecipe;
 import superscary.mcr.revelations.recipe.type.ModRecipeTypes;
 import superscary.mcr.revelations.toolkit.ModEnergyStorage;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
+public class ForgeBlockEntity extends MachineBaseEntity implements MenuProvider
 {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2)
+    private final ItemStackHandler itemHandler = new ItemStackHandler(17)
     {
         @Override
         protected void onContentsChanged (int slot)
@@ -49,14 +51,14 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
         {
             return switch (slot)
             {
-                case 0 -> true;
-                case 1 -> false;
+                case 16 -> false;
+                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 -> true;
                 default -> super.isItemValid(slot, stack);
             };
         }
     };
 
-    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(60000, 256)
+    private final ModEnergyStorage ENERGY_STORAGE = new ModEnergyStorage(500000, 2056)
     {
         @Override
         public void onEnergyChanged ()
@@ -82,9 +84,9 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
     private int progress = 0;
     private int maxProgress = 78;
 
-    public ExtruderEntity (BlockPos pos, BlockState state)
+    public ForgeBlockEntity (BlockPos pos, BlockState state)
     {
-        super(ModBlockEntities.EXTRUDER.get(), pos, state);
+        super(ModBlockEntities.FORGE.get(), pos, state);
         this.data = new ContainerData()
         {
             @Override
@@ -92,8 +94,8 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
             {
                 return switch (index)
                 {
-                    case 0 -> ExtruderEntity.this.progress;
-                    case 1 -> ExtruderEntity.this.maxProgress;
+                    case 0 -> ForgeBlockEntity.this.progress;
+                    case 1 -> ForgeBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -104,8 +106,8 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
 
                 switch (index)
                 {
-                    case 0 -> ExtruderEntity.this.progress = value;
-                    case 1 -> ExtruderEntity.this.maxProgress = value;
+                    case 0 -> ForgeBlockEntity.this.progress = value;
+                    case 1 -> ForgeBlockEntity.this.maxProgress = value;
                 }
 
             }
@@ -113,7 +115,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
             @Override
             public int getCount ()
             {
-                return 2;
+                return 3;
             }
         };
     }
@@ -121,7 +123,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
     @Override
     public @NotNull Component getDisplayName ()
     {
-        return Component.translatable("gui.mcr.extruder");
+        return Component.translatable("gui.mcr.forge");
     }
 
     @Nullable
@@ -129,7 +131,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
     public AbstractContainerMenu createMenu (int id, @NotNull Inventory inventory, @NotNull Player player)
     {
         ModMessages.sendToClients(new EnergySyncS2CPacket(this.ENERGY_STORAGE.getEnergyStored(), getBlockPos()));
-        return new ExtruderMenu(id, inventory, this, this.data);
+        return new ForgeMenu(id, inventory, this, this.data);
     }
 
     public IEnergyStorage getEnergyStorage ()
@@ -160,7 +162,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
 
             if (directionWrappedHandlerMap.containsKey(side))
             {
-                Direction localDir = this.getBlockState().getValue(ExtruderBlock.FACING);
+                Direction localDir = this.getBlockState().getValue(ForgeBlock.FACING);
 
                 if (side == Direction.UP || side == Direction.DOWN)
                 {
@@ -202,8 +204,8 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
     protected void saveAdditional (CompoundTag nbt)
     {
         nbt.put("inventory", itemHandler.serializeNBT());
-        nbt.putInt("extruder.progress", this.progress);
-        nbt.putInt("extruder.energy", ENERGY_STORAGE.getEnergyStored());
+        nbt.putInt("forge.progress", this.progress);
+        nbt.putInt("forge.energy", ENERGY_STORAGE.getEnergyStored());
 
         super.saveAdditional(nbt);
     }
@@ -213,8 +215,8 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
     {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-        progress = nbt.getInt("extruder.progress");
-        ENERGY_STORAGE.setEnergy(nbt.getInt("extruder.energy"));
+        progress = nbt.getInt("forge.progress");
+        ENERGY_STORAGE.setEnergy(nbt.getInt("forge.energy"));
     }
 
     public void drops ()
@@ -230,12 +232,14 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
 
     }
 
-    public static void tick (Level level, BlockPos pos, BlockState state, ExtruderEntity pEntity)
+    public static void tick (Level level, BlockPos pos, BlockState state, ForgeBlockEntity pEntity)
     {
         if (level.isClientSide)
         {
             return;
         }
+
+        System.out.println(hasRecipe(pEntity));
 
         if (hasRecipe(pEntity) && hasEnoughEnergy(pEntity))
         {
@@ -257,12 +261,12 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
 
     }
 
-    private static void extractEnergy (ExtruderEntity pEntity)
+    private static void extractEnergy (ForgeBlockEntity pEntity)
     {
         pEntity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
     }
 
-    private static boolean hasEnoughEnergy (ExtruderEntity pEntity)
+    private static boolean hasEnoughEnergy (ForgeBlockEntity pEntity)
     {
         return pEntity.ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ * pEntity.maxProgress;
     }
@@ -272,7 +276,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
         this.progress = 0;
     }
 
-    private static void craftItem (ExtruderEntity pEntity)
+    private static void craftItem (ForgeBlockEntity pEntity)
     {
         Level level = pEntity.level;
 
@@ -282,19 +286,22 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<ExtruderRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTRUDER.get(), inventory, level);
+        Optional<ForgeRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.FORGE.get(), inventory, level);
 
         if (hasRecipe(pEntity))
         {
-            pEntity.itemHandler.extractItem(0, 1, false);
-            pEntity.itemHandler.setStackInSlot(1, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(1).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
+            for (int i = 0; i < pEntity.itemHandler.getSlots(); i++)
+            {
+                pEntity.itemHandler.extractItem(i, 1, false);
+            }
+            pEntity.itemHandler.setStackInSlot(16, new ItemStack(recipe.get().getResultItem(RegistryAccess.EMPTY).getItem(), pEntity.itemHandler.getStackInSlot(16).getCount() + recipe.get().getResultItem(RegistryAccess.EMPTY).getCount()));
 
             pEntity.resetProgress();
         }
 
     }
 
-    private static boolean hasRecipe (ExtruderEntity entity)
+    private static boolean hasRecipe (ForgeBlockEntity entity)
     {
         Level level = entity.level;
 
@@ -304,14 +311,14 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<ExtruderRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTRUDER.get(), inventory, level);
+        Optional<ForgeRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.FORGE.get(), inventory, level);
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem(RegistryAccess.EMPTY));
     }
 
     private static boolean canInsertItemIntoOutputSlot (SimpleContainer inventory, ItemStack stack)
     {
-        return inventory.getItem(1).getItem() == stack.getItem() || inventory.getItem(1).isEmpty();
+        return inventory.getItem(16).getItem() == stack.getItem() || inventory.getItem(16).isEmpty();
     }
 
     private static boolean canInsertAmountIntoOutputSlot (SimpleContainer inventory)
@@ -319,7 +326,7 @@ public class ExtruderEntity extends MachineBaseEntity implements MenuProvider
         return inventory.getItem(1).getMaxStackSize() > inventory.getItem(1).getCount();
     }
 
-    public ExtruderEntity getBlockEntity ()
+    public ForgeBlockEntity getBlockEntity ()
     {
         return this;
     }

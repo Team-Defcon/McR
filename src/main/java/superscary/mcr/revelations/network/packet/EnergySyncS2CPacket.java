@@ -103,6 +103,17 @@ public class EnergySyncS2CPacket
 
             }
 
+            if (Minecraft.getInstance().level.getBlockEntity(pos) instanceof ForgeBlockEntity blockEntity)
+            {
+                blockEntity.setEnergyLevel(energy);
+
+                if (Minecraft.getInstance().player.containerMenu instanceof ForgeMenu menu && menu.blockEntity.getBlockEntity().getBlockPos().equals(pos))
+                {
+                    blockEntity.setEnergyLevel(energy);
+                }
+
+            }
+
         });
 
         return true;

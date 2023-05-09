@@ -1,0 +1,31 @@
+{
+  "parent": "mcr:block/machine",
+  "textures": {
+    "sides": "mcr:block/forge/side",
+    "front": "mcr:block/forge/front",
+    "west": "mcr:block/forge/side",
+    "east": "mcr:block/forge/side",
+    "south": "mcr:block/forge/back",
+    "up": "mcr:block/forge/top",
+    "down": "mcr:block/forge/bottom"
+  },
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        270,
+        90,
+        90
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  }
+}

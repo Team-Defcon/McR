@@ -22,6 +22,7 @@ public class ModMenuTypes
     public static final RegistryObject<MenuType<CompressorMenu>> COMPRESSOR_MENU = registerMenuType(CompressorMenu::new, "compressor_menu");
     public static final RegistryObject<MenuType<ExtruderMenu>> EXTRUDER_MENU = registerMenuType(ExtruderMenu::new, "extruder_menu");
     public static final RegistryObject<MenuType<ChemicalMixerMenu>> CHEMICAL_MIXER_MENU = registerMenuType(ChemicalMixerMenu::new, "chemical_mixer_menu");
+    public static final RegistryObject<MenuType<ForgeMenu>> FORGE_MENU = registerMenuType(ForgeMenu::new, "forge_menu");
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType (IContainerFactory<T> factory, String name)
     {
